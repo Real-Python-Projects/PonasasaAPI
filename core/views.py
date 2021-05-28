@@ -17,8 +17,8 @@ from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.generics import get_object_or_404
 
-class PharmacyOwnerViewSet(viewsets.ModelViewSet):
-    permisssion_classes = (IsAdminUser,)
+class PharmacyOwnerProfileViewSet(viewsets.ModelViewSet):
+    permisssion_classes = (IsAdminUser,IsAuthenticated,)
     serializer_class = PharmacyOwnerSerializer
     queryset = PharmacyOwnerProfile.objects.all()
     def get(self, format=None):
@@ -53,6 +53,91 @@ class PharmacistViewSet(viewsets.ModelViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.error_messages,
                         status=status.HTTP_400_BAD_REQUEST)
+# class PharmacistViewSet(viewsets.ViewSet):
+#     permission_classes = (IsAdminUser,)
+
+#     def list(self,request):
+#         Pharmacist=Pharmacist.objects.all()
+#         serializer=PharmacistSerializer(Pharmacist,many=True,context={"request":request})
+#         response_dict={"error":False,"message":"All Pharmacist List Data","data":serializer.data}
+#         return Response(response_dict)
+
+#     def post(self,request):
+#         try:
+#             serializer= PharmacistSerializer(data=request.data,context={"request":request})
+#             serializer.is_valid(raise_exception=True)
+#             serializer.save()
+#             dict_response={"error":False,"message":"Pharmacist Data Save Successfully"}
+#         except:
+#             dict_response={"error":True,"message":"Error During Saving Company Data"}
+#         return Response(dict_response)
+    
+#     def retrieve(self, request, pk=None):
+#         queryset = Pharmacist.objects.all()
+#         Pharmacist = get_object_or_404(queryset, pk=pk)
+#         serializer = PharmacistSerliazer(Pharmacist, context={"request": request})
+
+#         serializer_data = serializer.data
+#         # Accessing All the Medicine Details of Current Medicine ID ..... 
+#         #pass
+
+#         return Response({"error": False, "message": "Single Data Fetch", "data": serializer_data})
+
+#     def update(self,request,pk=None):
+#         try:
+#             queryset=Pharmacist.objects.all()
+#             Pharmacist=get_object_or_404(queryset,pk=pk)
+#             serializer=PharmacistSerializer(Pharmacist,data=request.data,context={"request":request})
+#             serializer.is_valid(raise_exception=True)
+#             serializer.save()
+#             dict_response={"error":False,"message":"Successfully Updated Pharmacist Data"}
+#         except:
+#             dict_response={"error":True,"message":"Error During Updating Pharmacist Data"}
+
+#         return Response(dict_response)
+
+# class PharmacyOwnerProfileViewSet(viewsets.ViewSet):
+#     permission_classes = (IsAdminUser,)
+
+#     def list(self,request):
+#         pharmacyOwnerProfile=PharmacyOwnerProfile.objects.all()
+#         serializer=PharmacyOwnerProfileSerializer(pharmacyOwnerProfile,many=True,context={"request":request})
+#         response_dict={"error":False,"message":"All PharmacyOwnerProfile List Data","data":serializer.data}
+#         return Response(response_dict)
+
+#     def post(self,request):
+#         try:
+#             serializer= PharmacyOwnerProfileSerializer(data=request.data,context={"request":request})
+#             serializer.is_valid(raise_exception=True)
+#             serializer.save()
+#             dict_response={"error":False,"message":"PharmacyOwnerProfile Data Save Successfully"}
+#         except:
+#             dict_response={"error":True,"message":"Error During Saving Company Data"}
+#         return Response(dict_response)
+    
+#     def retrieve(self, request, pk=None):
+#         queryset = PharmacyOwnerProfile.objects.all()
+#         PharmacyOwnerProfile = get_object_or_404(queryset, pk=pk)
+#         serializer = PharmacyOwnerProfileSerliazer(PharmacyOwnerProfile, context={"request": request})
+
+#         serializer_data = serializer.data
+#         # Accessing All the Medicine Details of Current Medicine ID ..... 
+#         #pass
+
+#         return Response({"error": False, "message": "Single Data Fetch", "data": serializer_data})
+
+#     def update(self,request,pk=None):
+#         try:
+#             queryset=PharmacyOwnerProfile.objects.all()
+#             PharmacyOwnerProfile=get_object_or_404(queryset,pk=pk)
+#             serializer=PharmacyOwnerProfileSerializer(PharmacyOwnerProfile,data=request.data,context={"request":request})
+#             serializer.is_valid(raise_exception=True)
+#             serializer.save()
+#             dict_response={"error":False,"message":"Successfully Updated PharmacyOwnerProfile Data"}
+#         except:
+#             dict_response={"error":True,"message":"Error During Updating PharmacyOwnerProfile Data"}
+
+#         return Response(dict_response)
 
 class PharmacyViewSet(viewsets.ViewSet):
     permission_classes = (IsAdminUser,)

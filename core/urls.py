@@ -5,7 +5,7 @@ from .views import *
 #...
 from rest_framework import routers
 router = routers.DefaultRouter()
-router.register('pharmacyowner', PharmacyOwnerViewSet, basename='pharmacyowner')
+router.register('pharmacyowner', PharmacyOwnerProfileViewSet, basename='pharmacyowner')
 router.register('pharmacist', PharmacistViewSet, basename='pharmacist')
 router.register('pharmacy', PharmacyViewSet, basename='pharmacy')
 router.register('pharmacybranch', PharmacyBranchViewSet, basename='pharmacybranch')
