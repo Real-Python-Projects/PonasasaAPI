@@ -12,6 +12,9 @@ router.register('pharmacybranch', PharmacyBranchViewSet, basename='pharmacybranc
 router.register('product', ProductViewSet, basename='product')
 router.register('activity', ActivityViewSet, basename='activity')
 router.register('messages', MessageViewSet, basename='messages')
+router.register('prescription',PrescriptionViewSet, basename='prescription')
+router.register('report',ReportViewSet, basename='report')
+router.register('advertisement',AdvertisementViewSet, basename='advertisement')
 #...
 
 urlpatterns = [

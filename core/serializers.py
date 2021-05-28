@@ -1,10 +1,7 @@
-
-from .models import PharmacistProfile, PharmacyOwnerProfile
 from rest_framework import serializers, status
-# from models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
-from .models import PharmacistProfile, PharmacyOwnerProfile, Branch, Pharmacy,PharmacyBranch,Product,Activity,Messages
+from .models import *
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -106,4 +103,18 @@ class MessageSerializer(serializers.ModelSerializer):
         fields="__all__"
 
 
+class PrescriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Prescription
+        fields="__all__"
+
+class ReportSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Report
+        fields="__all__"
+
+class AdvertisementSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Prescription
+        fields="__all__"
 

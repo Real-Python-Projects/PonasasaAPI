@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .serializers import *
-from .models import PharmacyOwnerProfile, PharmacistProfile, PharmacyBranch, Product,Pharmacy
+from .models import *
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
@@ -267,5 +267,134 @@ class ActivityViewSet(viewsets.ViewSet):
             dict_response={"error":False,"message":"Successfully Updated Activity Data"}
         except:
             dict_response={"error":True,"message":"Error During Updating Activity Data"}
+
+        return Response(dict_response)
+
+
+class PrescriptionViewSet(viewsets.ViewSet):
+    permission_classes = (IsAdminUser,)
+
+    def list(self,request):
+        prescription = Prescription.objects.all()
+        serializer=PrescriptionSerializer(prescription,many=True,context={"request":request})
+        response_dict={"error":False,"message":"All Prescription List Data","data":serializer.data}
+        return Response(response_dict)
+
+    def post(self,request):
+        try:
+            serializer= PrescriptionSerializer(data=request.data,context={"request":request})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            dict_response={"error":False,"message":"Prescription Data Save Successfully"}
+        except:
+            dict_response={"error":True,"message":"Error During Saving Prescription Data"}
+        return Response(dict_response)
+    
+    def retrieve(self, request, pk=None):
+        queryset = Prescription.objects.all()
+        prescription = get_object_or_404(queryset, pk=pk)
+        serializer = PrescriptionSerializer(prescription, context={"request": request})
+
+        serializer_data = serializer.data
+        # Accessing All the Medicine Details of Current Medicine ID ..... 
+        #pass
+
+        return Response({"error": False, "message": "Single Prescription Data Fetch", "data": serializer_data})
+
+    def update(self,request,pk=None):
+        try:
+            queryset=Prescription.objects.all()
+            prescription=get_object_or_404(queryset,pk=pk)
+            serializer=PrescriptionSerializer(prescription,data=request.data,context={"request":request})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            dict_response={"error":False,"message":"Successfully Updated Prescription Data"}
+        except:
+            dict_response={"error":True,"message":"Error During Updating Prescription Data"}
+
+        return Response(dict_response)
+
+class ReportViewSet(viewsets.ViewSet):
+    permission_classes = (IsAdminUser,)
+
+    def list(self,request):
+        report = Report.objects.all()
+        serializer=ReportSerializer(report,many=True,context={"request":request})
+        response_dict={"error":False,"message":"All Report List Data","data":serializer.data}
+        return Response(response_dict)
+
+    def post(self,request):
+        try:
+            serializer= ReportSerializer(data=request.data,context={"request":request})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            dict_response={"error":False,"message":"Report Data Save Successfully"}
+        except:
+            dict_response={"error":True,"message":"Error During Saving Report Data"}
+        return Response(dict_response)
+    
+    def retrieve(self, request, pk=None):
+        queryset = Report.objects.all()
+        report = get_object_or_404(queryset, pk=pk)
+        serializer = ReportSerializer(report, context={"request": request})
+
+        serializer_data = serializer.data
+        # Accessing All the Medicine Details of Current Medicine ID ..... 
+        #pass
+
+        return Response({"error": False, "message": "Single Report Data Fetch", "data": serializer_data})
+
+    def update(self,request,pk=None):
+        try:
+            queryset=Report.objects.all()
+            Report=get_object_or_404(queryset,pk=pk)
+            serializer=ReportSerializer(Report,data=request.data,context={"request":request})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            dict_response={"error":False,"message":"Successfully Updated Report Data"}
+        except:
+            dict_response={"error":True,"message":"Error During Updating Report Data"}
+
+        return Response(dict_response)
+class AdvertisementViewSet(viewsets.ViewSet):
+    permission_classes = (IsAdminUser,)
+
+    def list(self,request):
+        advertisement = Advertisement.objects.all()
+        serializer=AdvertisementSerializer(advertisement,many=True,context={"request":request})
+        response_dict={"error":False,"message":"All Advertisement List Data","data":serializer.data}
+        return Response(response_dict)
+
+    def post(self,request):
+        try:
+            serializer= AdvertisementSerializer(data=request.data,context={"request":request})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            dict_response={"error":False,"message":"Advertisement Data Save Successfully"}
+        except:
+            dict_response={"error":True,"message":"Error During Saving Advertisement Data"}
+        return Response(dict_response)
+    
+    def retrieve(self, request, pk=None):
+        queryset = Advertisement.objects.all()
+        advertisement = get_object_or_404(queryset, pk=pk)
+        serializer = AdvertisementSerializer(advertisement, context={"request": request})
+
+        serializer_data = serializer.data
+        # Accessing All the Medicine Details of Current Medicine ID ..... 
+        #pass
+
+        return Response({"error": False, "message": "Single Advertisement Data Fetch", "data": serializer_data})
+
+    def update(self,request,pk=None):
+        try:
+            queryset=Advertisement.objects.all()
+            advertisement=get_object_or_404(queryset,pk=pk)
+            serializer=AdvertisementSerializer(advertisement,data=request.data,context={"request":request})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            dict_response={"error":False,"message":"Successfully Updated Advertisement Data"}
+        except:
+            dict_response={"error":True,"message":"Error During Updating Advertisement Data"}
 
         return Response(dict_response)

@@ -94,10 +94,25 @@ class Messages(models.Model):
         return f'{self.sender} sending message to {self.reciever}'
 
 class Prescription(models.Model):
-    pass
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255)
+    objects = models.Manager()
+
+    def __str__(self):
+        return self.name
 
 class Report(models.Model):
-    pass
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255)
+    objects = models.Manager()
 
-class Advatisements(models.Model):
-    pass
+    def __str__(self):
+        return self.name
+
+class Advertisement(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255)
+    objects = models.Manager()
+
+    def __str__(self):
+        return self.name
