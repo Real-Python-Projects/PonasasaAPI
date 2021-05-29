@@ -28,6 +28,15 @@ class PharmacistProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+class CustomerProfile(models.Model):
+    id=models.AutoField(primary_key=True)
+    user = models.OneToOneField(User, models.SET_DEFAULT, default=None)
+    objects=models.Manager()
+
+
+    def __str__(self):
+        return self.user.username
+
 class Branch(models.Model):
     name = models.CharField(max_length=200)
     objects=models.Manager()

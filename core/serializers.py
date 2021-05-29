@@ -48,6 +48,26 @@ class PharmacistSerializer(serializers.ModelSerializer):
         )
         return buyer
 
+class CustomerSerializer(serializers.ModelSerializer):
+
+    user = UserSerializer(required=True)
+
+    class Meta:
+        model = CustomerProfile
+        fields = ['id','user']
+
+    def create(self, validated_data):
+        user_data = validated_data.pop('user')
+        user = UserSerializer.create(
+            UserSerializer(), validated_data=user_data)
+        buyer, created = CustomerProfile.objects.update_or_create(
+            user=user,
+            # mobileNo=validated_data.pop('mobileNo'),
+            # location=validated_data.pop('location'),
+            # address=validated_data.pop('address'),
+
+        )
+        return buyer
 
 class PharmacyOwnerSerializer(serializers.HyperlinkedModelSerializer):
 

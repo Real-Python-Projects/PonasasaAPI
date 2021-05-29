@@ -53,6 +53,24 @@ class PharmacistViewSet(viewsets.ModelViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.error_messages,
                         status=status.HTTP_400_BAD_REQUEST)
+
+class CustomerViewSet(viewsets.ModelViewSet):
+    permisssion_classes = (IsAdminUser,)
+    serializer_class = PharmacistSerializer
+    queryset = CustomerProfile.objects.all()
+    def get(self, format=None):
+
+        seller = CustomerProfile.objects.all()
+        serializer = UserSerializer(seller, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = CustomerSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=ValueError):
+            serializer.create(validated_data=request.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.error_messages,
+                        status=status.HTTP_400_BAD_REQUEST)
 # class PharmacistViewSet(viewsets.ViewSet):
 #     permission_classes = (IsAdminUser,)
 
