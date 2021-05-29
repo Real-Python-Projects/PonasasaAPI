@@ -22,6 +22,18 @@ class PharmacyOwnerProfile(models.Model):
 class PharmacistProfile(models.Model):
     id=models.AutoField(primary_key=True)
     user = models.OneToOneField(User, models.SET_DEFAULT, default=None)
+    name = models.CharField(max_length=255, default=None)
+    gender = models.CharField(max_length=255)
+    profile_pic = models.FileField()
+    address = models.TextField()
+    country = models.CharField(max_length=255, default=None)
+    province = models.CharField(max_length=255, default=None)
+    district = models.CharField(max_length=255, default=None)
+    city = models.CharField(max_length=255, default=None)
+    zip_code = models.CharField(max_length=255, default=None)
+    phone_number = models.CharField(max_length=255, default=None)
+    education = models.CharField(max_length=255, default=None)
+    workplace = models.CharField(max_length=255, default=None)
     objects=models.Manager()
 
 
@@ -58,9 +70,19 @@ class Pharmacy(models.Model):
 
 class PharmacyBranch(models.Model):
     id=models.AutoField(primary_key=True)
-    name=models.CharField(max_length=255)
-    license_no=models.CharField(max_length=255)
-    address=models.CharField(max_length=255)
+    name_of_pharmacy = models.CharField(max_length=255)
+    location_address = models.CharField(max_length=255)
+    country = models.CharField(max_length=255, default=None)
+    province = models.CharField(max_length=255, default=None)
+    district = models.CharField(max_length=255, default=None)
+    city = models.CharField(max_length=255, default=None)
+    zip_code = models.CharField(max_length=255, default=None)
+    phone_number = models.CharField(max_length=255, default=None)
+    license_no = models.CharField(max_length=255)
+    license_operate = models.FileField()
+    health_safety_code = models.CharField(max_length=255)
+    about = models.TextField(max_length=150)
+    website = models.CharField(max_length=255)
     contact_no=models.CharField(max_length=255)
     email=models.CharField(max_length=255)
     description=models.CharField(max_length=255)
@@ -91,7 +113,18 @@ class Product(models.Model):
 
 class Activity(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
+    code = models.CharField(max_length=255)
+    item = models.CharField(max_length=255)
+    code = models.CharField(max_length=255)
+    delivered = models.IntegerField(default=1)
+    quantity = models.IntegerField()
+    total = models.IntegerField()
+    costofdelivery = models.IntegerField()
+    delivery_time = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+
     objects = models.Manager()
 
     def __str__(self):
@@ -101,6 +134,10 @@ class Messages(models.Model):
     id = models.AutoField(primary_key=True)
     sender = models.CharField(max_length=255)
     reciever = models.CharField(max_length=255)
+    subject = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+
     objects = models.Manager()
 
     def __str__(self):
@@ -108,7 +145,15 @@ class Messages(models.Model):
 
 class Prescription(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
+    item = models.CharField(max_length=255)
+    patient = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)
+    quantity = models.IntegerField()
+    price = models.IntegerField()
+    patient_contact = models.CharField(max_length=255)
+    presciber_name = models.CharField(max_length=255)
+    presciber_contact = models.CharField(max_length=255)
+    date = models.DateField(auto_now_add=True)
     objects = models.Manager()
 
     def __str__(self):
