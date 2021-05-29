@@ -102,6 +102,7 @@ class Product(models.Model):
     instock=models.IntegerField()
     reader_limit=models.CharField(max_length=255)
     expire_date=models.DateField()
+    added_by_pharmacist=models.ForeignKey(PharmacistProfile,on_delete=models.CASCADE)
     mfg_date=models.DateField()
     description=models.CharField(max_length=255)
     attention=models.CharField(max_length=255)
@@ -111,6 +112,41 @@ class Product(models.Model):
     added_on=models.DateTimeField(auto_now_add=True)
     edited_on=models.DateTimeField(auto_now_add=True)
     objects=models.Manager()
+
+class ProductMedia(models.Model):
+    id=models.AutoField(primary_key=True)
+    product_id=models.ForeignKey(Product,on_delete=models.CASCADE)
+    media_type_choice=((1,"Image"),(2,"Video"))
+    media_type=models.CharField(max_length=255)
+    media_content=models.FileField()
+    created_at=models.DateTimeField(auto_now_add=True)
+    is_active=models.IntegerField(default=1)
+
+class ProductTransaction(models.Model):
+    id=models.AutoField(primary_key=True)
+    transaction_type_choices=((1,"BUY"),(2,"SELL"))
+    product_id=models.ForeignKey(Product,on_delete=models.CASCADE)
+    transaction_product_count=models.IntegerField(default=1)
+    transaction_type=models.CharField(choices=transaction_type_choices,max_length=255)
+    transaction_description=models.CharField(max_length=255)
+    created_at=models.DateTimeField(auto_now_add=True)
+
+class CustomerOrders(models.Model):
+    id=models.AutoField(primary_key=True)
+    product_id=models.ForeignKey(Product,on_delete=models.DO_NOTHING)
+    purchase_price=models.CharField(max_length=255)
+    coupon_code=models.CharField(max_length=255)
+    discount_amt=models.CharField(max_length=255)
+    product_status=models.CharField(max_length=255)
+    created_at=models.DateTimeField(auto_now_add=True)
+
+class OrderDeliveryStatus(models.Model):
+    id=models.AutoField(primary_key=True)
+    order_id=models.ForeignKey(CustomerOrder,on_delete=models.CASCADE)
+    status=models.CharField(max_length=255)
+    status_message=models.CharField(max_length=255)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now_add=True)
 
 class Activity(models.Model):
     id = models.AutoField(primary_key=True)
