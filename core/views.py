@@ -505,3 +505,176 @@ class AdvertisementViewSet(viewsets.ViewSet):
             dict_response={"error":True,"message":"Error During Updating Advertisement Data"}
 
         return Response(dict_response)
+    
+    
+class ProductMediaViewSet(viewsets.ViewSet):
+    permission_classes = (IsAdminUser,)
+
+    def list(self,request):
+        productMedia = ProductMedia.objects.all()
+        serializer=ProductMediaSerializer(productMedia,many=True,context={"request":request})
+        response_dict={"error":False,"message":"All ProductMedia List Data","data":serializer.data}
+        return Response(response_dict)
+
+    def post(self,request):
+        try:
+            serializer= ProductMediaSerializer(data=request.data,context={"request":request})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            dict_response={"error":False,"message":"ProductMedia Data Save Successfully"}
+        except:
+            dict_response={"error":True,"message":"Error During Saving ProductMedia Data"}
+        return Response(dict_response)
+    
+    def retrieve(self, request, pk=None):
+        queryset = ProductMedia.objects.all()
+        productMedia = get_object_or_404(queryset, pk=pk)
+        serializer = ProductMediaSerializer(productMedia, context={"request": request})
+
+        serializer_data = serializer.data
+        # Accessing All the Medicine Details of Current Medicine ID ..... 
+        #pass
+
+        return Response({"error": False, "message": "Single ProductMedia Data Fetch", "data": serializer_data})
+
+    def update(self,request,pk=None):
+        try:
+            queryset=ProductMedia.objects.all()
+            productMedia=get_object_or_404(queryset,pk=pk)
+            serializer=ProductMediaSerializer(productMedia,data=request.data,context={"request":request})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            dict_response={"error":False,"message":"Successfully Updated ProductMedia Data"}
+        except:
+            dict_response={"error":True,"message":"Error During Updating ProductMedia Data"}
+
+        return Response(dict_response)
+    
+class CustomerOrderViewSet(viewsets.ViewSet):
+    permission_classes = (IsAdminUser,)
+
+    def list(self,request):
+        customerOrder = CustomerOrder.objects.all()
+        serializer=CustomerOrderSerializer(customerOrder,many=True,context={"request":request})
+        response_dict={"error":False,"message":"All CustomerOrder List Data","data":serializer.data}
+        return Response(response_dict)
+
+    def post(self,request):
+        try:
+            serializer= CustomerOrderSerializer(data=request.data,context={"request":request})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            dict_response={"error":False,"message":"CustomerOrder Data Save Successfully"}
+        except:
+            dict_response={"error":True,"message":"Error During Saving CustomerOrder Data"}
+        return Response(dict_response)
+    
+    def retrieve(self, request, pk=None):
+        queryset = CustomerOrder.objects.all()
+        customerOrder = get_object_or_404(queryset, pk=pk)
+        serializer = CustomerOrderSerializer(customerOrder, context={"request": request})
+
+        serializer_data = serializer.data
+        # Accessing All the Medicine Details of Current Medicine ID ..... 
+        #pass
+
+        return Response({"error": False, "message": "Single CustomerOrder Data Fetch", "data": serializer_data})
+
+    def update(self,request,pk=None):
+        try:
+            queryset=CustomerOrder.objects.all()
+            customerOrder=get_object_or_404(queryset,pk=pk)
+            serializer=CustomerOrderSerializer(customerOrder,data=request.data,context={"request":request})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            dict_response={"error":False,"message":"Successfully Updated CustomerOrder Data"}
+        except:
+            dict_response={"error":True,"message":"Error During Updating CustomerOrder Data"}
+
+        return Response(dict_response)
+    
+class ProductTransactionViewSet(viewsets.ViewSet):
+    permission_classes = (IsAdminUser,)
+
+    def list(self,request):
+        productTransaction = ProductTransaction.objects.all()
+        serializer=ProductTransactionSerializer(productTransaction,many=True,context={"request":request})
+        response_dict={"error":False,"message":"All ProductTransaction List Data","data":serializer.data}
+        return Response(response_dict)
+
+    def post(self,request):
+        try:
+            serializer= ProductTransactionSerializer(data=request.data,context={"request":request})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            dict_response={"error":False,"message":"ProductTransaction Data Save Successfully"}
+        except:
+            dict_response={"error":True,"message":"Error During Saving ProductTransaction Data"}
+        return Response(dict_response)
+    
+    def retrieve(self, request, pk=None):
+        queryset = ProductTransaction.objects.all()
+        productTransaction = get_object_or_404(queryset, pk=pk)
+        serializer = ProductTransactionSerializer(productTransaction, context={"request": request})
+
+        serializer_data = serializer.data
+        # Accessing All the Medicine Details of Current Medicine ID ..... 
+        #pass
+
+        return Response({"error": False, "message": "Single ProductTransaction Data Fetch", "data": serializer_data})
+
+    def update(self,request,pk=None):
+        try:
+            queryset=ProductTransaction.objects.all()
+            productTransaction=get_object_or_404(queryset,pk=pk)
+            serializer=ProductTransactionSerializer(productTransaction,data=request.data,context={"request":request})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            dict_response={"error":False,"message":"Successfully Updated ProductTransaction Data"}
+        except:
+            dict_response={"error":True,"message":"Error During Updating ProductTransaction Data"}
+
+        return Response(dict_response)
+    
+class OrderDeliveryStatusViewSet(viewsets.ViewSet):
+    permission_classes = (IsAdminUser,)
+
+    def list(self,request):
+        orderDeliveryStatus = OrderDeliveryStatus.objects.all()
+        serializer=OrderDeliveryStatusSerializer(orderDeliveryStatus,many=True,context={"request":request})
+        response_dict={"error":False,"message":"All OrderDeliveryStatus List Data","data":serializer.data}
+        return Response(response_dict)
+
+    def post(self,request):
+        try:
+            serializer= OrderDeliveryStatusSerializer(data=request.data,context={"request":request})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            dict_response={"error":False,"message":"OrderDeliveryStatus Data Save Successfully"}
+        except:
+            dict_response={"error":True,"message":"Error During Saving OrderDeliveryStatus Data"}
+        return Response(dict_response)
+    
+    def retrieve(self, request, pk=None):
+        queryset = OrderDeliveryStatus.objects.all()
+        orderDeliveryStatus = get_object_or_404(queryset, pk=pk)
+        serializer = OrderDeliveryStatusSerializer(orderDeliveryStatus, context={"request": request})
+
+        serializer_data = serializer.data
+        # Accessing All the Medicine Details of Current Medicine ID ..... 
+        #pass
+
+        return Response({"error": False, "message": "Single OrderDeliveryStatus Data Fetch", "data": serializer_data})
+
+    def update(self,request,pk=None):
+        try:
+            queryset=OrderDeliveryStatus.objects.all()
+            orderDeliveryStatus=get_object_or_404(queryset,pk=pk)
+            serializer=OrderDeliveryStatusSerializer(orderDeliveryStatus,data=request.data,context={"request":request})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            dict_response={"error":False,"message":"Successfully Updated OrderDeliveryStatus Data"}
+        except:
+            dict_response={"error":True,"message":"Error During Updating OrderDeliveryStatus Data"}
+
+        return Response(dict_response)
