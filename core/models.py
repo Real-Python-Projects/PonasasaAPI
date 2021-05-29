@@ -180,7 +180,7 @@ class Advertisement(models.Model):
 @receiver(post_save,sender=CustomUser)
 def save_user_profile(sender,instance,**kwargs):
     if instance.user_type==1:
-        instance.phermacyownerprofile.save()
+        instance.pharmacyownerprofile.save()
     if instance.user_type==2:
         instance.phermacistprofile.save()
     if instance.user_type==3:
