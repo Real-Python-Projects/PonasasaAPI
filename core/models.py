@@ -1,13 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+from django.urls import reverse
 
 # Create your models here.
-
+class CustomUser(AbstractUser):
+    user_type_choices=((1,"Pharmacy Owner"),(2," Phermacist"),(3,"Customer"))
+    user_type=models.CharField(max_length=255,choices=user_type_choices,default=1)
 
 class PharmacyOwnerProfile(models.Model):
     id=models.AutoField(primary_key=True)
-    user = models.OneToOneField(User, blank=True, null=True, on_delete=models.SET_DEFAULT, default=None)
+    user = models.OneToOneField(CustomUser, blank=True, null=True, on_delete=models.SET_DEFAULT, default=None)
     mobileNo = models.CharField(max_length=40, default=None)
     cnic = models.CharField(max_length=30, default=None)
     city = models.CharField(max_length=30, default=None)
@@ -21,7 +27,7 @@ class PharmacyOwnerProfile(models.Model):
 
 class PharmacistProfile(models.Model):
     id=models.AutoField(primary_key=True)
-    user = models.OneToOneField(User, models.SET_DEFAULT, default=None)
+    user = models.OneToOneField(CustomUser, models.SET_DEFAULT, default=None)
     name = models.CharField(max_length=255, default=None)
     gender = models.CharField(max_length=255)
     profile_pic = models.FileField()
@@ -42,7 +48,7 @@ class PharmacistProfile(models.Model):
 
 class CustomerProfile(models.Model):
     id=models.AutoField(primary_key=True)
-    user = models.OneToOneField(User, models.SET_DEFAULT, default=None)
+    user = models.OneToOneField(CustomUser, models.SET_DEFAULT, default=None)
     objects=models.Manager()
 
 
@@ -169,3 +175,13 @@ class Advertisement(models.Model):
 
     def __str__(self):
         return self.name
+
+
+@receiver(post_save,sender=CustomUser)
+def save_user_profile(sender,instance,**kwargs):
+    if instance.user_type==1:
+        instance.phermacyownerprofile.save()
+    if instance.user_type==2:
+        instance.phermacistprofile.save()
+    if instance.user_type==3:
+        instance.customerprofile.save()

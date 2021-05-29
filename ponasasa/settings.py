@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-9dln04ct3j5t5n*0=ijtkw1(zykc%%(u)k6b@%_5o*tx2_!$=0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ponasasaapi.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['ponasasaapi.herokuapp.com', '127.0.0.1','localhost:8000']
 
 
 # Application definition
@@ -134,3 +134,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 prod_db  =  dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(prod_db)
+
+
+
+STATIC_ROOT = os.path.join(BASE_DIR,"static")
+
+AUTH_USER_MODEL = "core.CustomUser"
+
+MEDIA_URL = "/media/"
+
+MEDIA_ROOT = os.path.join(BASE_DIR,"media")
