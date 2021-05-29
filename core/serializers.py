@@ -122,7 +122,7 @@ class ProductMediaSerializer(serializers.ModelSerializer):
 
 class CustomerOrderSerializer(serializers.ModelSerializer):
     class Meta:
-        model=CustomerOrder
+        model=CustomerOrders
         fields="__all__"
 
 class OrderDeliveryStatusSerializer(serializers.ModelSerializer):
@@ -132,7 +132,7 @@ class OrderDeliveryStatusSerializer(serializers.ModelSerializer):
        
 class ProductTransactionSerializer(serializers.ModelSerializer):
     class Meta:
-        model=Activity
+        model=ProductTransaction
         fields="__all__"
 
 class MessageSerializer(serializers.ModelSerializer):

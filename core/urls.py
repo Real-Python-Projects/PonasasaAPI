@@ -18,6 +18,8 @@ router.register('messages', MessageViewSet, basename='messages')
 router.register('prescription',PrescriptionViewSet, basename='prescription')
 router.register('report',ReportViewSet, basename='report')
 router.register('advertisement',AdvertisementViewSet, basename='advertisement')
+router.register('orderdeliverystatus', OrderDeliveryStatusViewSet, basename='orderdeliverystatus')
+router.register('productstransaction', ProductTransactionViewSet, basename='productstransaction')
 #...
 
 urlpatterns = [
