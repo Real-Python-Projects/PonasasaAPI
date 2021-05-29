@@ -8,7 +8,6 @@ admin.site.site_header = "Ponasasa"
 admin.site.register(PharmacyOwnerProfile)
 admin.site.register(PharmacistProfile)
 admin.site.register(CustomerProfile)
-admin.site.register(Branch)
 admin.site.register(Pharmacy)
 admin.site.register(PharmacyBranch)
 admin.site.register(Product)
