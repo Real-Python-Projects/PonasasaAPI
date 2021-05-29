@@ -114,8 +114,23 @@ class ProductSerliazer(serializers.ModelSerializer):
     class Meta:
         model=Product
         fields="__all__"
-        
-class ActivitySerializer(serializers.ModelSerializer):
+
+class ProductMediaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=ProductMedia
+        fields="__all__"
+
+class CustomerOrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=CustomerOrder
+        fields="__all__"
+
+class OrderDeliveryStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=OrderDeliveryStatus 
+        fields="__all__"
+       
+class ProductTransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model=Activity
         fields="__all__"
