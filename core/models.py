@@ -49,12 +49,7 @@ class CustomerProfile(models.Model):
     def __str__(self):
         return self.user.username
 
-class Branch(models.Model):
-    name = models.CharField(max_length=200)
-    objects=models.Manager()
 
-    def __str__(self):
-        return self.name
 
 
 class Pharmacy(models.Model):
