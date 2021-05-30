@@ -20,6 +20,8 @@ router.register('report',ReportViewSet, basename='report')
 router.register('advertisement',AdvertisementViewSet, basename='advertisement')
 router.register('orderdeliverystatus', OrderDeliveryStatusViewSet, basename='orderdeliverystatus')
 router.register('productstransaction', ProductTransactionViewSet, basename='productstransaction')
+router.register('customernotification', NotificationCustomerViewSet, basename='customernotification')
+router.register('pharmacistnotifications', NotificationPharmacistViewSet, basename='pharmacistnotifications')
 #...
 
 urlpatterns = [
