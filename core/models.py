@@ -182,7 +182,7 @@ class Messages(models.Model):
 
 class NotificationPharmacist(models.Model):
     id = models.AutoField(primary_key=True)
-    student_id = models.ForeignKey(PharmacistProfile, on_delete=models.CASCADE)
+    pharmacist_id = models.ForeignKey(PharmacistProfile, on_delete=models.CASCADE)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
@@ -191,7 +191,7 @@ class NotificationPharmacist(models.Model):
 
 class NotificationCustomer(models.Model):
     id = models.AutoField(primary_key=True)
-    staff_id = models.ForeignKey(CustomerProfile, on_delete=models.CASCADE)
+    customer_id = models.ForeignKey(CustomerProfile, on_delete=models.CASCADE)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
