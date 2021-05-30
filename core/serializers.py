@@ -153,6 +153,15 @@ class ReportSerializer(serializers.ModelSerializer):
 
 class AdvertisementSerializer(serializers.ModelSerializer):
     class Meta:
-        model=Prescription
+        model= Advertisement
         fields="__all__"
 
+class NotificationCustomerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=NotificationCustomer
+        fields="__all__"
+
+class NotificationPharmacistSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=NotificationPharmacist
+        fields="__all__"
