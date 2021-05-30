@@ -132,7 +132,7 @@ class OrderDeliveryStatusSerializer(serializers.ModelSerializer):
        
 class ProductTransactionSerializer(serializers.ModelSerializer):
     class Meta:
-        model=Activity
+        model=ProductTransaction
         fields="__all__"
 
 class MessageSerializer(serializers.ModelSerializer):

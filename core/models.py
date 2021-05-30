@@ -14,11 +14,11 @@ class CustomUser(AbstractUser):
 class PharmacyOwnerProfile(models.Model):
     id=models.AutoField(primary_key=True)
     user = models.OneToOneField(CustomUser, blank=True, null=True, on_delete=models.SET_DEFAULT, default=None)
-    mobileNo = models.CharField(max_length=40, default=None)
-    cnic = models.CharField(max_length=30, default=None)
-    city = models.CharField(max_length=30, default=None)
-    address = models.CharField(max_length=30, default=None)
-    shop_name = models.CharField(max_length=30, default=None)
+    mobileNo = models.CharField(max_length=40)
+    cnic = models.CharField(max_length=30)
+    city = models.CharField(max_length=30)
+    address = models.CharField(max_length=30)
+    shop_name = models.CharField(max_length=30)
     objects=models.Manager()
 
     def __str__(self):
@@ -230,6 +230,16 @@ class Advertisement(models.Model):
     def __str__(self):
         return self.name
 
+
+@receiver(post_save,sender=CustomUser)
+def create_user_profile(sender,instance,created,**kwargs):
+    if created:
+        if instance.user_type==1:
+            PharmacyOwnerProfile.objects.create(user=instance)
+        if instance.user_type==2:
+            PharmacistProfile.objects.create(user=instance)
+        if instance.user_type==3:
+            CustomerProfile.objects.create(user=instance)
 
 @receiver(post_save,sender=CustomUser)
 def save_user_profile(sender,instance,**kwargs):
