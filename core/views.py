@@ -678,3 +678,47 @@ class OrderDeliveryStatusViewSet(viewsets.ViewSet):
             dict_response={"error":True,"message":"Error During Updating OrderDeliveryStatus Data"}
 
         return Response(dict_response)
+
+
+class NotificationCustomerViewSet(viewsets.ViewSet):
+    permission_classes = (IsAdminUser,)
+
+    def list(self,request):
+        notificationCustomer = NotificationCustomer.objects.all()
+        serializer=NotificationCustomerSerializer(notificationCustomer,many=True,context={"request":request})
+        response_dict={"error":False,"message":"All NotificationCustomer List Data","data":serializer.data}
+        return Response(response_dict)
+
+    def post(self,request):
+        try:
+            serializer= NotificationCustomerSerializer(data=request.data,context={"request":request})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            dict_response={"error":False,"message":"NotificationCustomer Data Save Successfully"}
+        except:
+            dict_response={"error":True,"message":"Error During Saving NotificationCustomer Data"}
+        return Response(dict_response)
+    
+    def retrieve(self, request, pk=None):
+        queryset = NotificationCustomer.objects.all()
+        notificationCustomer = get_object_or_404(queryset, pk=pk)
+        serializer = NotificationCustomerSerializer(notificationCustomer, context={"request": request})
+
+        serializer_data = serializer.data
+        # Accessing All the Medicine Details of Current Medicine ID ..... 
+        #pass
+
+        return Response({"error": False, "message": "Single NotificationCustomer Data Fetch", "data": serializer_data})
+
+    def update(self,request,pk=None):
+        try:
+            queryset=NotificationCustomer.objects.all()
+            notificationCustomer=get_object_or_404(queryset,pk=pk)
+            serializer=NotificationCustomerSerializer(notificationCustomer,data=request.data,context={"request":request})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            dict_response={"error":False,"message":"Successfully Updated NotificationCustomer Data"}
+        except:
+            dict_response={"error":True,"message":"Error During Updating NotificationCustomer Data"}
+
+        return Response(dict_response)
