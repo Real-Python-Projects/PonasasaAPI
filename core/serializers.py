@@ -122,7 +122,7 @@ class ProductMediaSerializer(serializers.ModelSerializer):
 
 class CustomerOrderSerializer(serializers.ModelSerializer):
     class Meta:
-        model=CustomerOrder
+        model=CustomerOrders
         fields="__all__"
 
 class OrderDeliveryStatusSerializer(serializers.ModelSerializer):

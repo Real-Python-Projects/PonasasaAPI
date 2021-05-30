@@ -142,7 +142,7 @@ class CustomerOrders(models.Model):
 
 class OrderDeliveryStatus(models.Model):
     id=models.AutoField(primary_key=True)
-    order_id=models.ForeignKey(CustomerOrder,on_delete=models.CASCADE)
+    order_id=models.ForeignKey(CustomerOrders,on_delete=models.CASCADE)
     status=models.CharField(max_length=255)
     status_message=models.CharField(max_length=255)
     created_at=models.DateTimeField(auto_now_add=True)
@@ -179,6 +179,24 @@ class Messages(models.Model):
 
     def __str__(self):
         return f'{self.sender} sending message to {self.reciever}'
+
+class NotificationPharmacist(models.Model):
+    id = models.AutoField(primary_key=True)
+    student_id = models.ForeignKey(PharmacistProfile, on_delete=models.CASCADE)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+    objects = models.Manager()
+
+
+class NotificationCustomer(models.Model):
+    id = models.AutoField(primary_key=True)
+    staff_id = models.ForeignKey(CustomerProfile, on_delete=models.CASCADE)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+    objects = models.Manager()
+
 
 class Prescription(models.Model):
     id = models.AutoField(primary_key=True)
