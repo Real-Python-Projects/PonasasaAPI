@@ -28,7 +28,6 @@ class PharmacyOwnerProfile(models.Model):
 class PharmacistProfile(models.Model):
     id=models.AutoField(primary_key=True)
     user = models.OneToOneField(CustomUser, models.SET_DEFAULT, default=None)
-    name = models.CharField(max_length=255, default=None)
     gender = models.CharField(max_length=255)
     profile_pic = models.FileField()
     address = models.TextField()
