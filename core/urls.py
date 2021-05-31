@@ -1,5 +1,7 @@
 from django.urls import path,include
 
+from auth.views import MyObtainTokenPairView
+from rest_framework_simplejwt.views import TokenRefreshView
 
 from .views import *
 #...
@@ -27,4 +29,7 @@ router.register('pharmacistnotifications', NotificationPharmacistViewSet, basena
 urlpatterns = [
     #...
     path('api/', include(router.urls)),
+    
+    path('api/login/', MyObtainTokenPairView.as_view(), name='token_obtain_pair'),
+    path('api/login/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
