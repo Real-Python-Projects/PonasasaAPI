@@ -10,6 +10,7 @@ from django.urls import reverse
 class CustomUser(AbstractUser):
     user_type_choices=((1,"Pharmacy Owner"),(2," Phermacist"),(3,"Customer"))
     user_type=models.CharField(max_length=255,choices=user_type_choices,default=1)
+    # role = models.CharField("User Type", max_length=10, choices=USER_TYPE, default='Customer')
 
 class PharmacyOwnerProfile(models.Model):
     id=models.AutoField(primary_key=True)

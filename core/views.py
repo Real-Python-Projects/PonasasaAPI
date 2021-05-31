@@ -61,7 +61,6 @@ class PharmacistViewSet(viewsets.ModelViewSet):
 
 class CustomerViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsPharmacyOwrner]
-    permisssion_classes = (IsAdminUser,)
     serializer_class = PharmacistSerializer
     queryset = CustomerProfile.objects.all()
     def get(self, format=None):
@@ -681,7 +680,7 @@ class OrderDeliveryStatusViewSet(viewsets.ViewSet):
 
 
 class NotificationCustomerViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated, IsPharmacyOwrner,IsCustomer,IsPharmacist]
+    permission_classes = [IsAuthenticated, IsPharmacyOwrner,IsCustomer,IsPharmacist,IsAdminUser]
     
 
     def list(self,request):
@@ -725,7 +724,7 @@ class NotificationCustomerViewSet(viewsets.ViewSet):
         return Response(dict_response)
 
 class NotificationPharmacistViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated, IsPharmacyOwrner,IsCustomer,IsPharmacist]
+    permission_classes = [IsAuthenticated, IsPharmacyOwrner,IsCustomer,IsPharmacist,IsAdminUser]
 
     def list(self,request):
         notificationPharmacist = NotificationPharmacist.objects.all()
