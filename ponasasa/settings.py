@@ -85,8 +85,14 @@ WSGI_APPLICATION = 'ponasasa.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'django',
+        'USER': 'django',
+        'PASSWORD': '059e48cfedce30e341acaf1dc3db5366',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
