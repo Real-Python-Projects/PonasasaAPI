@@ -12,7 +12,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 import dj_database_url 
-from django.core.management.utils import django_random_secret_key
+from django.core.management.utils import get_random_secret_key
+from urllib.parse import urlparse
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -31,7 +33,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY",get_random_secret_key())
 DEBUG = os.getenv("DEBUG","False") == "True"
 
 # ALLOWED_HOSTS = ['ponasasaapi.herokuapp.com', '127.0.0.1','localhost:8000']
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOST","'ponasasaapi.herokuapp.com', '127.0.0.1','localhost:8000',*").split(",")
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOST","'*'").split(",")
 
 # Application definition
 
