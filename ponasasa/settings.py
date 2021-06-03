@@ -87,18 +87,38 @@ WSGI_APPLICATION = 'ponasasa.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
+
+if os.getenv("DATABASE_URL","") != "":
+    r = urlparse(os.environ.get("DATABASE_URL"))
+    DATABASES = {
     'default': {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django',
-        'USER': 'django',
-        'PASSWORD': '059e48cfedce30e341acaf1dc3db5366',
-        'HOST': 'localhost',
-        'PORT': '',
+        'NAME': os.path.relpath(r.path,"/"),
+        'USER': r.username,
+        'PASSWORD': r.password,
+        'HOST': r.localhost,
+        'PORT': r.port,
+        'OPTIONS' : {"sssmode":"require"}
     }
 }
+else:
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # 'NAME': 'django',
+        # 'USER': 'django',
+        # 'PASSWORD': '059e48cfedce30e341acaf1dc3db5366',
+        # 'HOST': 'localhost',
+        # 'PORT': '',
+    }
+}
+
+
+
 
 
 # Password validation
