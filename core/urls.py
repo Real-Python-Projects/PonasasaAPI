@@ -5,6 +5,8 @@ from .views import *
 #...
 from rest_framework import routers
 router = routers.DefaultRouter()
+# router.register('customersignup', CustomerRegistrationViewSet, basename='customersignup')
+# router.register('userlogin', UserLoginViewSet, basename='userlogin')
 router.register('pharmacyowner', PharmacyOwnerProfileViewSet, basename='pharmacyowner')
 router.register('pharmacist', PharmacistViewSet, basename='pharmacist')
 router.register('customer', CustomerViewSet, basename='customer')
@@ -25,6 +27,8 @@ router.register('pharmacistnotifications', NotificationPharmacistViewSet, basena
 #...
 
 urlpatterns = [
-    #...
+    # #...
+    path('api/users/', CustomerRegistrationViewSet.as_view()),
+    path('api/users/login/', UserLoginViewSet.as_view()),
     path('api/', include(router.urls)),
 ]

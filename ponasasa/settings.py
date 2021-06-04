@@ -177,7 +177,25 @@ DATABASES['default'].update(prod_db)
 
 STATIC_ROOT = os.path.join(BASE_DIR,"static")
 
+
+
+
+# Provide default User Model as AUTH_USER_MOEL
 AUTH_USER_MODEL = "core.CustomUser"
+
+
+# Add two new backends under default authentication
+REST_FRAMEWORK = {
+  'DEFAULT_AUTHENTICATION_CLASSES': (
+        'core.backends.JWTPharmacyOwnerAuthentication',
+        'core.backends.JWTPharmacistAuthentication',
+        'core.backends.JWTCustomerAuthentication',
+  )
+}
+
+
+
+
 
 MEDIA_URL = "/media/"
 

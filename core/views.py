@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .serializers import *
 from .models import *
 from rest_framework import viewsets
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -13,7 +14,9 @@ from django.db.models import Sum
 from rest_framework import viewsets, generics
 
 # Create your views here.
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated,AllowAny
+
+from .renderers import UserJSONRenderer
 
 from rest_framework.generics import get_object_or_404
 from .permissions import IsPharmacyOwrner, IsPharmacist, IsCustomer
@@ -37,6 +40,35 @@ from .permissions import IsPharmacyOwrner, IsPharmacist, IsCustomer
 #         return Response(serializer.error_messages,
 #                         status=status.HTTP_400_BAD_REQUEST)
 
+ 
+class CustomerRegistrationViewSet(APIView):
+    permission_classes = (AllowAny,)
+    renderer_classes = (UserJSONRenderer,)
+    serializer_class = CustomerRegistrationSerializer
+
+    @classmethod
+    def get_extra_actions(cls):
+        return []
+ 
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+ 
+class UserLoginViewSet(APIView):
+    permission_classes = (AllowAny,)
+    renderer_classes = (UserJSONRenderer,)
+    serializer_class = UserLoginSerializer
+
+    @classmethod
+    def get_extra_actions(cls):
+        return []
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 class PharmacistViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsPharmacyOwrner]
@@ -61,6 +93,7 @@ class PharmacistViewSet(viewsets.ModelViewSet):
 
 class CustomerViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsPharmacyOwrner]
+    permisssion_classes = (IsAdminUser,)
     serializer_class = PharmacistSerializer
     queryset = CustomerProfile.objects.all()
     def get(self, format=None):
@@ -464,7 +497,7 @@ class ReportViewSet(viewsets.ViewSet):
 
         return Response(dict_response)
 class AdvertisementViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated, IsPharmacyOwrner,IsPharmacist,IsPharmacyOwrner]
+    permission_classes = [IsAuthenticated, IsPharmacyOwrner]
     def list(self,request):
         advertisement = Advertisement.objects.all()
         serializer=AdvertisementSerializer(advertisement,many=True,context={"request":request})
@@ -507,7 +540,7 @@ class AdvertisementViewSet(viewsets.ViewSet):
     
     
 class ProductMediaViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated, IsPharmacyOwrner,IsCustomer,IsPharmacist]
+    permission_classes = (IsAdminUser,)
 
     def list(self,request):
         productMedia = ProductMedia.objects.all()
@@ -550,7 +583,8 @@ class ProductMediaViewSet(viewsets.ViewSet):
         return Response(dict_response)
     
 class CustomerOrderViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated, IsPharmacyOwrner,IsCustomer,IsPharmacist]
+    permission_classes = (IsAdminUser,)
+
     def list(self,request):
         customerOrder = CustomerOrder.objects.all()
         serializer=CustomerOrderSerializer(customerOrder,many=True,context={"request":request})
@@ -592,7 +626,7 @@ class CustomerOrderViewSet(viewsets.ViewSet):
         return Response(dict_response)
     
 class ProductTransactionViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated, IsPharmacyOwrner,IsCustomer,IsPharmacist]
+    permission_classes = (IsAdminUser,)
 
     def list(self,request):
         productTransaction = ProductTransaction.objects.all()
@@ -635,8 +669,7 @@ class ProductTransactionViewSet(viewsets.ViewSet):
         return Response(dict_response)
     
 class OrderDeliveryStatusViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated, IsPharmacyOwrner,IsCustomer,IsPharmacist]
-    
+    permission_classes = (IsAdminUser,)
 
     def list(self,request):
         orderDeliveryStatus = OrderDeliveryStatus.objects.all()
@@ -680,8 +713,7 @@ class OrderDeliveryStatusViewSet(viewsets.ViewSet):
 
 
 class NotificationCustomerViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated, IsPharmacyOwrner,IsCustomer,IsPharmacist,IsAdminUser]
-    
+    permission_classes = (IsAdminUser,)
 
     def list(self,request):
         notificationCustomer = NotificationCustomer.objects.all()
@@ -724,7 +756,7 @@ class NotificationCustomerViewSet(viewsets.ViewSet):
         return Response(dict_response)
 
 class NotificationPharmacistViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated, IsPharmacyOwrner,IsCustomer,IsPharmacist,IsAdminUser]
+    permission_classes = (IsAdminUser,)
 
     def list(self,request):
         notificationPharmacist = NotificationPharmacist.objects.all()
