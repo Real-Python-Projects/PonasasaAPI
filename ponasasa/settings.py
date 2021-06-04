@@ -29,8 +29,8 @@ SECRET_KEY = 'django-insecure-9dln04ct3j5t5n*0=ijtkw1(zykc%%(u)k6b@%_5o*tx2_!$=0
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = os.getenv("DEBUG","False") == "True"
+DEBUG = True
+# DEBUG = os.getenv("DEBUG","False") == "True"
 
 ALLOWED_HOSTS = ['ponasasaapi.herokuapp.com', '127.0.0.1','localhost:8000']
 # ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOST","'*'").split(",")
