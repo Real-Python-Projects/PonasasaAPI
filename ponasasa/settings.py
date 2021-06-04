@@ -32,8 +32,8 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY",get_random_secret_key())
 # DEBUG = True
 DEBUG = os.getenv("DEBUG","False") == "True"
 
-# ALLOWED_HOSTS = ['ponasasaapi.herokuapp.com', '127.0.0.1','localhost:8000']
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOST","'*'").split(",")
+ALLOWED_HOSTS = ['ponasasaapi.herokuapp.com', '127.0.0.1','localhost:8000']
+# ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOST","'*'").split(",")
 
 # Application definition
 
