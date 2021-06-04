@@ -24,8 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-# SECRET_KEY = 'django-insecure-9dln04ct3j5t5n*0=ijtkw1(zykc%%(u)k6b@%_5o*tx2_!$=0'
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY",get_random_secret_key())
+SECRET_KEY = 'django-insecure-9dln04ct3j5t5n*0=ijtkw1(zykc%%(u)k6b@%_5o*tx2_!$=0'
+# SECRET_KEY = os.getenv("DJANGO_SECRET_KEY",get_random_secret_key())
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -90,23 +90,23 @@ WSGI_APPLICATION = 'ponasasa.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 
-if os.getenv("DATABASE_URL","") != "":
-    r = urlparse(os.environ.get("DATABASE_URL"))
-    DATABASES = {
-    'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.path.relpath(r.path,"/"),
-        'USER': r.username,
-        'PASSWORD': r.password,
-        'HOST': r.localhost,
-        'PORT': r.port,
-        'OPTIONS' : {"sssmode":"require"}
-    }
-}
-else:
-    DATABASES = {
+# if os.getenv("DATABASE_URL","") != "":
+#     r = urlparse(os.environ.get("DATABASE_URL"))
+#     DATABASES = {
+#     'default': {
+#         # 'ENGINE': 'django.db.backends.sqlite3',
+#         # 'NAME': BASE_DIR / 'db.sqlite3',
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': os.path.relpath(r.path,"/"),
+#         'USER': r.username,
+#         'PASSWORD': r.password,
+#         'HOST': r.localhost,
+#         'PORT': r.port,
+#         'OPTIONS' : {"sssmode":"require"}
+#     }
+# }
+# else:
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
