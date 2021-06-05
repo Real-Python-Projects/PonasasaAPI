@@ -3,3 +3,7 @@ This is an api for android and web aplication developed for kenya medical
 
 
 check it out at:  ponasasa21.herokuapp.com
+
+check out live on digital ocean :  http://159.203.7.235:8000/
+
+
