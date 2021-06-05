@@ -9,7 +9,8 @@ from django.urls import reverse
 # Create your models here.
 class CustomUser(AbstractUser):
     user_type_choices=((1,"Pharmacy Owner"),(2," Phermacist"),(3,"Customer"))
-    user_type=models.CharField(max_length=255,choices=user_type_choices,default=1)
+    user_type=models.CharField(max_length=255,choices=user_type_choices,default=3)
+    # objects = models.UserManager()
     # role = models.CharField("User Type", max_length=10, choices=USER_TYPE, default='Customer')
 
 class PharmacyOwnerProfile(models.Model):
@@ -20,7 +21,7 @@ class PharmacyOwnerProfile(models.Model):
     city = models.CharField(max_length=30)
     address = models.CharField(max_length=30)
     shop_name = models.CharField(max_length=30)
-    objects=models.Manager()
+    objects=models.PharmacyOwnerManager()
 
     def __str__(self):
         return self.user.username
@@ -40,7 +41,7 @@ class PharmacistProfile(models.Model):
     phone_number = models.CharField(max_length=255, default=None)
     education = models.CharField(max_length=255, default=None)
     workplace = models.CharField(max_length=255, default=None)
-    objects=models.Manager()
+    objects=models.PharmacistManager()
 
 
     def __str__(self):
@@ -56,6 +57,48 @@ class CustomerProfile(models.Model):
         return self.user.username
 
 
+# class UserManager(BaseUserManager):
+ 
+#     def get_by_natural_key(self, email):
+#         return self.get(email=email)
+ 
+ 
+class PharmacyOwnerManager(BaseUserManager):
+ 
+    def create_pharmacyowner(self, first_name, last_name, email, qualification, university, password=None):
+        if email is None:
+            raise TypeError('Users must have an email address.')
+        pharmacyowner = PharmacyOwnerProfile(first_name=first_name, last_name=last_name, 
+                          email=self.normalize_email(email),
+                          qualification=qualification, university=university)
+        pharmacyowner.set_password(password)
+        pharmacyowner.save()
+        return pharmacyowner
+ 
+ 
+class PharmacistManager(BaseUserManager):
+ 
+    def create_phamacist(self, first_name, last_name, email, designation, company, password=None):
+        if email is None:
+            raise TypeError('Users must have an email address.')
+        pharmacist = PharmacistProfile(first_name=first_name, last_name=last_name, 
+                            email=self.normalize_email(email),
+                            designation=designation, company=company)
+        pharmacist.set_password(password)
+        pharmacist.save()
+        return pharmacist
+
+class CustomerManager(BaseUserManager):
+ 
+    def create_customer(self, first_name, last_name, email, designation, company, password=None):
+        if email is None:
+            raise TypeError('Users must have an email address.')
+        customer = CustomerProfile(first_name=first_name, last_name=last_name, 
+                            email=self.normalize_email(email),
+                            designation=designation, company=company)
+        customer.set_password(password)
+        customer.save()
+        return customer
 
 
 class Pharmacy(models.Model):

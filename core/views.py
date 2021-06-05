@@ -92,7 +92,7 @@ class PharmacistViewSet(viewsets.ModelViewSet):
         return Response({'response':'You must be authorised'})
 
 class CustomerViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated, IsPharmacyOwrner]
+    permission_classes = [IsAuthenticated, IsPharmacyOwrner,]
     serializer_class = CustomerSerializer
     queryset = CustomerProfile.objects.all()
     def get(self, format=None):
@@ -152,7 +152,7 @@ class CustomerViewSet(viewsets.ModelViewSet):
 #         return Response(dict_response)
 
 class PharmacyOwnerProfileViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    permission_classes = [IsAuthenticated, IsAdminUser,IsPharmacyOwrner,]
 
     def list(self,request):
         pharmacyOwnerProfile=PharmacyOwnerProfile.objects.all()
@@ -195,7 +195,7 @@ class PharmacyOwnerProfileViewSet(viewsets.ViewSet):
         return Response(dict_response)
 
 class PharmacyViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated, IsPharmacyOwrner,IsAdminUser,]
+    permission_classes = [IsAdminUser, IsPharmacyOwrner,IsAdminUser,]
 
     def list(self,request):
         pharmacy=Pharmacy.objects.all()
@@ -324,8 +324,8 @@ class ProductViewSet(viewsets.ViewSet):
 
         return Response(dict_response)
 
-class MessageViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated, IsPharmacyOwrner,IsPharmacist,IsCustomer,IsAdminUser]
+class MessageViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated & (IsPharmacyOwrner|IsPharmacist|IsCustomer|IsAdminUser)]
 
     def list(self,request):
         message = Messages.objects.all()
