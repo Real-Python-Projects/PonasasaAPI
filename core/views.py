@@ -71,7 +71,7 @@ class UserLoginViewSet(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class PharmacistViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated, IsPharmacyOwrner]
+    permission_classes = [IsPharmacyOwrner]
     serializer_class = PharmacistSerializer
     queryset = PharmacistProfile.objects.all()
    
