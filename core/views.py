@@ -94,7 +94,7 @@ class PharmacistViewSet(viewsets.ModelViewSet):
 class CustomerViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsPharmacyOwrner]
     permisssion_classes = (IsAdminUser,)
-    serializer_class = PharmacistSerializer
+    serializer_class = CustomerSerializer
     queryset = CustomerProfile.objects.all()
     def get(self, format=None):
 
