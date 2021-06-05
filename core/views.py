@@ -195,7 +195,7 @@ class PharmacyOwnerProfileViewSet(viewsets.ViewSet):
         return Response(dict_response)
 
 class PharmacyViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated, IsPharmacyOwrner]
+    permission_classes = [IsAuthenticated, IsPharmacyOwrner,IsAdminUser,]
 
     def list(self,request):
         pharmacy=Pharmacy.objects.all()
@@ -239,7 +239,7 @@ class PharmacyViewSet(viewsets.ViewSet):
 
 
 class PharmacyBranchViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated, IsPharmacyOwrner]
+    permission_classes = [IsAuthenticated, IsPharmacyOwrner,IsAdminUser,]
 
     def list(self,request):
         pharmacybranch=PharmacyBranch.objects.all()
@@ -282,7 +282,7 @@ class PharmacyBranchViewSet(viewsets.ViewSet):
         return Response(dict_response)
 
 class ProductViewSet(viewsets.ViewSet):
-    permission_classes = [AllowAny,]
+    permission_classes = [AllowAny,IsAdminUser,]
 
     def list(self,request):
         product = Product.objects.all()
@@ -325,7 +325,7 @@ class ProductViewSet(viewsets.ViewSet):
         return Response(dict_response)
 
 class MessageViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated, IsPharmacyOwrner,IsPharmacist,IsCustomer]
+    permission_classes = [IsAuthenticated, IsPharmacyOwrner,IsPharmacist,IsCustomer,IsAdminUser]
 
     def list(self,request):
         message = Messages.objects.all()
@@ -368,7 +368,7 @@ class MessageViewSet(viewsets.ViewSet):
         return Response(dict_response)
 
 class ActivityViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated, IsPharmacyOwrner,IsPharmacist]
+    permission_classes = [IsAuthenticated, IsPharmacyOwrner,IsPharmacist,IsAdminUser,]
 
     def list(self,request):
         activity = Activity.objects.all()
@@ -412,7 +412,7 @@ class ActivityViewSet(viewsets.ViewSet):
 
 
 class PrescriptionViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated, IsPharmacyOwrner,IsCustomer,IsPharmacist]
+    permission_classes = [IsAuthenticated, IsPharmacyOwrner,IsCustomer,IsPharmacist,IsAdminUser,]
 
     def list(self,request):
         prescription = Prescription.objects.all()
@@ -455,7 +455,7 @@ class PrescriptionViewSet(viewsets.ViewSet):
         return Response(dict_response)
 
 class ReportViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated, IsPharmacyOwrner,IsPharmacist]
+    permission_classes = [IsAuthenticated, IsPharmacyOwrner,IsPharmacist,IsAdminUser]
     def list(self,request):
         report = Report.objects.all()
         serializer=ReportSerializer(report,many=True,context={"request":request})
@@ -496,7 +496,7 @@ class ReportViewSet(viewsets.ViewSet):
 
         return Response(dict_response)
 class AdvertisementViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated, IsPharmacyOwrner]
+    permission_classes = [IsAuthenticated, IsPharmacyOwrner,IsAdminUser,]
     def list(self,request):
         advertisement = Advertisement.objects.all()
         serializer=AdvertisementSerializer(advertisement,many=True,context={"request":request})
@@ -539,7 +539,7 @@ class AdvertisementViewSet(viewsets.ViewSet):
     
     
 class ProductMediaViewSet(viewsets.ViewSet):
-    permission_classes = (IsAdminUser,)
+    permission_classes = (IsAdminUser,IsAdminUser,)
 
     def list(self,request):
         productMedia = ProductMedia.objects.all()
@@ -582,10 +582,10 @@ class ProductMediaViewSet(viewsets.ViewSet):
         return Response(dict_response)
     
 class CustomerOrderViewSet(viewsets.ViewSet):
-    permission_classes = (IsAdminUser,)
+    permission_classes = (IsAdminUser,IsAdminUser,)
 
     def list(self,request):
-        customerOrder = CustomerOrder.objects.all()
+        customerOrder = CustomerOrders.objects.all()
         serializer=CustomerOrderSerializer(customerOrder,many=True,context={"request":request})
         response_dict={"error":False,"message":"All CustomerOrder List Data","data":serializer.data}
         return Response(response_dict)
@@ -601,7 +601,7 @@ class CustomerOrderViewSet(viewsets.ViewSet):
         return Response(dict_response)
     
     def retrieve(self, request, pk=None):
-        queryset = CustomerOrder.objects.all()
+        queryset = CustomerOrders.objects.all()
         customerOrder = get_object_or_404(queryset, pk=pk)
         serializer = CustomerOrderSerializer(customerOrder, context={"request": request})
 
@@ -613,7 +613,7 @@ class CustomerOrderViewSet(viewsets.ViewSet):
 
     def update(self,request,pk=None):
         try:
-            queryset=CustomerOrder.objects.all()
+            queryset=CustomerOrders.objects.all()
             customerOrder=get_object_or_404(queryset,pk=pk)
             serializer=CustomerOrderSerializer(customerOrder,data=request.data,context={"request":request})
             serializer.is_valid(raise_exception=True)
@@ -625,7 +625,7 @@ class CustomerOrderViewSet(viewsets.ViewSet):
         return Response(dict_response)
     
 class ProductTransactionViewSet(viewsets.ViewSet):
-    permission_classes = (IsAdminUser,)
+    permission_classes = (IsAdminUser,IsAdminUser,)
 
     def list(self,request):
         productTransaction = ProductTransaction.objects.all()
@@ -668,7 +668,7 @@ class ProductTransactionViewSet(viewsets.ViewSet):
         return Response(dict_response)
     
 class OrderDeliveryStatusViewSet(viewsets.ViewSet):
-    permission_classes = (IsAdminUser,)
+    permission_classes = (IsAdminUser,IsAdminUser,)
 
     def list(self,request):
         orderDeliveryStatus = OrderDeliveryStatus.objects.all()
@@ -712,7 +712,7 @@ class OrderDeliveryStatusViewSet(viewsets.ViewSet):
 
 
 class NotificationCustomerViewSet(viewsets.ViewSet):
-    permission_classes = (IsAdminUser,)
+    permission_classes = (IsAdminUser,IsAdminUser,)
 
     def list(self,request):
         notificationCustomer = NotificationCustomer.objects.all()
@@ -755,7 +755,7 @@ class NotificationCustomerViewSet(viewsets.ViewSet):
         return Response(dict_response)
 
 class NotificationPharmacistViewSet(viewsets.ViewSet):
-    permission_classes = (IsAdminUser,)
+    permission_classes = (IsAdminUser,IsAdminUser,)
 
     def list(self,request):
         notificationPharmacist = NotificationPharmacist.objects.all()
