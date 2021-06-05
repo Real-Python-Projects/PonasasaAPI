@@ -38,5 +38,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include("core.urls")),
     path('api-auth/', include('rest_framework.urls')),  # new
+
+    path('api/v1/', include('djoser.urls')),
+    path('api/v1/', include('djoser.urls.authtoken')),
+
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 ]

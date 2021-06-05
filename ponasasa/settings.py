@@ -48,8 +48,27 @@ INSTALLED_APPS = [
     'rest_framework',
      # required for serving swagger ui's css/js files
    'drf_yasg',
-   'corsheaders'
+    'corsheaders',
+   'rest_framework.authtoken',
+    'djoser',
 ]
+
+#configure DRF
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
+
+# configure Djoser
+DJOSER = {
+    "USER_ID_FIELD": "username"
+}
+
 
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -187,17 +206,18 @@ STATIC_ROOT = os.path.join(BASE_DIR,"static")
 AUTH_USER_MODEL = "core.CustomUser"
 
 
-# Add two new backends under default authentication
-REST_FRAMEWORK = {
-  'DEFAULT_AUTHENTICATION_CLASSES': (
-        'core.backends.JWTPharmacyOwnerAuthentication',
-        'core.backends.JWTPharmacistAuthentication',
-        'core.backends.JWTCustomerAuthentication',
-  ),
-      'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
-    ]
-}
+# # Add two new backends under default authentication
+# REST_FRAMEWORK = {
+#   'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'core.backends.JWTPharmacyOwnerAuthentication',
+#         'core.backends.JWTPharmacistAuthentication',
+#         'core.backends.JWTCustomerAuthentication',
+#         'rest_framework.authentication.SessionAuthentication',
+#   ),
+#       'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.AllowAny',
+#     ]
+# }
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_PERMISSION_CLASSES': [
