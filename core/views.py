@@ -93,7 +93,6 @@ class PharmacistViewSet(viewsets.ModelViewSet):
 
 class CustomerViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsPharmacyOwrner]
-    permisssion_classes = (IsAdminUser,)
     serializer_class = CustomerSerializer
     queryset = CustomerProfile.objects.all()
     def get(self, format=None):
@@ -283,7 +282,7 @@ class PharmacyBranchViewSet(viewsets.ViewSet):
         return Response(dict_response)
 
 class ProductViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated, IsPharmacyOwrner,IsPharmacist]
+    permission_classes = [AllowAny,]
 
     def list(self,request):
         product = Product.objects.all()
