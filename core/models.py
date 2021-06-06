@@ -263,6 +263,7 @@ class Prescription(models.Model):
 
 class Report(models.Model):
     id = models.AutoField(primary_key=True)
+    pharmacy = models.OneToOneField(PharmacyBranch,on_delete=models.DO_NOTHING)
     name = models.CharField(max_length=255)
     objects = models.Manager()
 
@@ -271,6 +272,7 @@ class Report(models.Model):
 
 class Advertisement(models.Model):
     id = models.AutoField(primary_key=True)
+    pharmacy = models.OneToOneField(PharmacyBranch,on_delete=models.DO_NOTHING)
     name = models.CharField(max_length=255)
     objects = models.Manager()
 
