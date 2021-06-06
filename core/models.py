@@ -246,6 +246,7 @@ class NotificationCustomer(models.Model):
 
 class Prescription(models.Model):
     id = models.AutoField(primary_key=True)
+    product = models.OneToOneField(Product,on_delete=models.DO_NOTHING)
     item = models.CharField(max_length=255)
     patient = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
