@@ -279,6 +279,14 @@ class Advertisement(models.Model):
     def __str__(self):
         return self.name
 
+class ProductQuestions(models.Model):
+    id=models.AutoField(primary_key=True)
+    product_id=models.ForeignKey(Product,on_delete=models.CASCADE)
+    user_id=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    question=models.TextField()
+    answer=models.TextField()
+    created_at=models.DateTimeField(auto_now_add=True)
+    is_active=models.IntegerField(default=1)
 
 @receiver(post_save,sender=CustomUser)
 def create_user_profile(sender,instance,created,**kwargs):
