@@ -288,6 +288,16 @@ class ProductQuestions(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     is_active=models.IntegerField(default=1)
 
+class ProductReviews(models.Model):
+    id=models.AutoField(primary_key=True)
+    product_id=models.ForeignKey(Product,on_delete=models.CASCADE)
+    user_id=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    review_image=models.FileField()
+    rating=models.CharField(default="5",max_length=255)
+    review=models.TextField(default="")
+    created_at=models.DateTimeField(auto_now_add=True)
+    is_active=models.IntegerField(default=1)
+
 @receiver(post_save,sender=CustomUser)
 def create_user_profile(sender,instance,created,**kwargs):
     if created:
