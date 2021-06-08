@@ -56,7 +56,6 @@ INSTALLED_APPS = [
 ]
 
 MPESA_CONFIG = {
-        ...
         'CONSUMER_KEY': '<Your consumer key from daraja>',
         'CONSUMER_SECRET': '<Your consumer secret from daraja>',
         'HOST_NAME': '<Your hostname e.g https://myhostname>',
