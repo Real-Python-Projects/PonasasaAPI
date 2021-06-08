@@ -55,19 +55,8 @@ INSTALLED_APPS = [
     'mpesa',
 ]
 
-MPESA_CONFIG = {
-<<<<<<< HEAD
-        
-=======
->>>>>>> 7567ff7fe00ceb355af652bd10e0f824016187e8
-        'CONSUMER_KEY': '<Your consumer key from daraja>',
-        'CONSUMER_SECRET': '<Your consumer secret from daraja>',
-        'HOST_NAME': '<Your hostname e.g https://myhostname>',
-        'PASS_KEY': '<Your pass key from daraja>',
-        'SAFARICOM_API': 'https://sandbox.safaricom.co.ke',
-        'SHORT_CODE': '174379'
 
-    }
+
 
 
 
@@ -107,7 +96,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+MPESA_CONFIG = {
+        'CONSUMER_KEY': '<Your consumer key from daraja>',
+        'CONSUMER_SECRET': '<Your consumer secret from daraja>',
+        'HOST_NAME': '<Your hostname e.g https://myhostname>',
+        'PASS_KEY': '<Your pass key from daraja>',
+        'SAFARICOM_API': 'https://sandbox.safaricom.co.ke',
+        'SHORT_CODE': '174379'
 
+    }
 
 ROOT_URLCONF = 'ponasasa.urls'
 
