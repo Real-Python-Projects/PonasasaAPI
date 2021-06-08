@@ -51,7 +51,10 @@ INSTALLED_APPS = [
     'corsheaders',
    'rest_framework.authtoken',
     'djoser',
+    'rest_framework_swagger',
 ]
+
+REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' }
 
 #configure DRF
 REST_FRAMEWORK = {
