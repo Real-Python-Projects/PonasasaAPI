@@ -1,5 +1,8 @@
 from django.urls import path,include
 
+from django.contrib import admin
+from django.urls import path
+
 from .views import *
 #...
 from rest_framework import routers
@@ -35,4 +38,12 @@ urlpatterns = [
     path('api/users/login/', UserLoginViewSet.as_view()),
     path('api/', include(router.urls)),
     path('docs/', include_docs_urls(title='Polls API')),
+]
+
+
+mpesa_urls = [
+    path('submit/', SubmitView.as_view(), name='submit'),
+    path('confirm/', ConfirmView.as_view(), name='confirm'),
+    path('check-online/', CheckTransactionOnline.as_view(), name='confirm-online'),
+    path('check-transaction/', CheckTransaction.as_view(), name='check_transaction'),
 ]
