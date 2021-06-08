@@ -18,6 +18,8 @@ from django.urls import path,include
 
 from rest_framework import permissions
 
+from ponasasa.urls import mpesa_urls
+
 
 
 urlpatterns = [
@@ -27,4 +29,7 @@ urlpatterns = [
 
     path('api/v1/', include('djoser.urls')),
     path('api/v1/', include('djoser.urls.authtoken')), 
+    path('mpesa/', include(mpesa_urls))
 ]
+
+
