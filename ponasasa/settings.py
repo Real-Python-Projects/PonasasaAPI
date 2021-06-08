@@ -52,7 +52,20 @@ INSTALLED_APPS = [
    'rest_framework.authtoken',
     'djoser',
     'rest_framework_swagger',
+    'mpesa',
 ]
+
+MPESA_CONFIG = {
+        ...
+        'CONSUMER_KEY': '<Your consumer key from daraja>',
+        'CONSUMER_SECRET': '<Your consumer secret from daraja>',
+        'HOST_NAME': '<Your hostname e.g https://myhostname>',
+        'PASS_KEY': '<Your pass key from daraja>',
+        'SAFARICOM_API': 'https://sandbox.safaricom.co.ke',
+        'SHORT_CODE': '174379'
+
+    }
+
 
 REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' }
 
