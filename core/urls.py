@@ -32,7 +32,12 @@ router.register('productstransaction', ProductTransactionViewSet, basename='prod
 router.register('customernotification', NotificationCustomerViewSet, basename='customernotification')
 router.register('pharmacistnotifications', NotificationPharmacistViewSet, basename='pharmacistnotifications')
 
+
+
 urlpatterns = [
+
+
+   
     # #...
     path('api/users/', CustomerRegistrationViewSet.as_view()),
     path('api/users/login/', UserLoginViewSet.as_view()),
@@ -41,9 +46,4 @@ urlpatterns = [
 ]
 
 
-mpesa_urls = [
-    path('submit/', SubmitView.as_view(), name='submit'),
-    path('confirm/', ConfirmView.as_view(), name='confirm'),
-    path('check-online/', CheckTransactionOnline.as_view(), name='confirm-online'),
-    path('check-transaction/', CheckTransaction.as_view(), name='check_transaction'),
-]
+

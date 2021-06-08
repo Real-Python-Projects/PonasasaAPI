@@ -15,8 +15,7 @@ from django.urls import reverse
 from django.contrib.auth.base_user import BaseUserManager
 
 
-
-# Create your models here.
+#Spliting users in model using custom user
 class CustomUser(AbstractUser):
     user_type_choices=((1,"Pharmacy Owner"),(2," Phermacist"),(3,"Customer"))
     user_type=models.CharField(max_length=255,choices=user_type_choices,default=3)

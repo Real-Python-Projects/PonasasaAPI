@@ -56,7 +56,7 @@ INSTALLED_APPS = [
 ]
 
 MPESA_CONFIG = {
-        ...
+        
         'CONSUMER_KEY': '<Your consumer key from daraja>',
         'CONSUMER_SECRET': '<Your consumer secret from daraja>',
         'HOST_NAME': '<Your hostname e.g https://myhostname>',
@@ -67,7 +67,7 @@ MPESA_CONFIG = {
     }
 
 
-REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' }
+
 
 #configure DRF
 REST_FRAMEWORK = {
@@ -257,3 +257,6 @@ EMAIL_USE_SSL = False
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'benstardjango@gmail.com'
 EMAIL_HOST_PASSWORD = 'bb99GG00'
+
+
+REST_FRAMEWORK = {'DEFAULT_SCHEMA_CLASS':'rest_framework.schemas.coreapi.AutoSchema' }

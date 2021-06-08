@@ -18,9 +18,11 @@ from django.urls import path,include
 
 from rest_framework import permissions
 
-from ponasasa.urls import mpesa_urls
+from core.mpesaurls import mpesa_urls
 
-
+from django.urls import path,include
+from rest_framework_swagger.views import get_swagger_view
+schema_view = get_swagger_view(title='Ponasasa API Documentations')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,7 +31,11 @@ urlpatterns = [
 
     path('api/v1/', include('djoser.urls')),
     path('api/v1/', include('djoser.urls.authtoken')), 
-    path('mpesa/', include(mpesa_urls))
+    path('mpesa/', include(mpesa_urls)),
+    path('swagger/', schema_view)
 ]
+
+
+
 
 
