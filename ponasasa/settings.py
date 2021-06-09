@@ -48,16 +48,31 @@ INSTALLED_APPS = [
     'core',
     'rest_framework',
      # required for serving swagger ui's css/js files
-   'drf_yasg',
+    'drf_yasg',
     'corsheaders',
-   'rest_framework.authtoken',
+    'rest_framework.authtoken',
     'djoser',
     'rest_framework_swagger',
     'mpesa',
+
+    'phone_verify',
 ]
 
 
-
+# Settings for phone_verify
+PHONE_VERIFICATION = {
+        'BACKEND': 'phone_verify.backends.twilio.TwilioBackend',
+        'TWILIO_SANDBOX_TOKEN':'123456',
+        'OPTIONS': {
+            'SID': 'fake',
+            'SECRET': 'fake',
+            'FROM': '+254717713943'
+        },
+        'TOKEN_LENGTH': 6,
+        'MESSAGE': 'Welcome to {app}! Please use security code {otp} to proceed.',
+        'APP_NAME': 'Phone Verify',
+        'OTP_EXPIRATION_TIME': 3600  # In seconds only
+    }
 
 
 
