@@ -7,6 +7,13 @@ from .views import *
 #...
 from rest_framework import routers
 
+from django.urls import path,include
+from rest_framework.documentation import include_docs_urls
+from rest_framework_swagger.views import get_swagger_view
+schema_view = get_swagger_view(title="Ponasasa API documentation")
+
+from core.mpesaurls import mpesa_urls
+
 router = routers.DefaultRouter()
 # router.register('customersignup', CustomerRegistrationViewSet, basename='customersignup')
 # router.register('userlogin', UserLoginViewSet, basename='userlogin')
@@ -38,6 +45,8 @@ urlpatterns = [
     path('api/users/', CustomerRegistrationViewSet.as_view()),
     path('api/users/login/', UserLoginViewSet.as_view()),
     path('api/', include(router.urls)),
+    path('docs/', schema_view),
+    path('mpesa/', include(mpesa_urls)),
 ]
 
 
