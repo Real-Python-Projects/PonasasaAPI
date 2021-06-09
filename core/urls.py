@@ -7,10 +7,6 @@ from .views import *
 #...
 from rest_framework import routers
 
-from rest_framework.documentation import include_docs_urls
-from rest_framework.schemas import get_schema_view
-
-
 router = routers.DefaultRouter()
 # router.register('customersignup', CustomerRegistrationViewSet, basename='customersignup')
 # router.register('userlogin', UserLoginViewSet, basename='userlogin')
@@ -42,7 +38,6 @@ urlpatterns = [
     path('api/users/', CustomerRegistrationViewSet.as_view()),
     path('api/users/login/', UserLoginViewSet.as_view()),
     path('api/', include(router.urls)),
-    path('docs/', include_docs_urls(title='Polls API')),
 ]
 
 

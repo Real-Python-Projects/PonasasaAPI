@@ -72,7 +72,15 @@ REST_FRAMEWORK = {
         # 'core.permissions.IsPharmacyOwrner',
         # 'core.permissions.IsPharmacist',
         # 'core.permissions.IsCustomer',
-    ]
+    ],
+    'DEFAULT_SCHEMA_CLASS':'rest_framework.schemas.coreapi.AutoSchema' ,
+
+    # Parser classes priority-wise for Swagger
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser',
+        'rest_framework.parsers.JSONParser',
+    ],
 }
 
 # configure Djoser
@@ -259,4 +267,3 @@ EMAIL_HOST_USER = 'benstardjango@gmail.com'
 EMAIL_HOST_PASSWORD = 'bb99GG00'
 
 
-REST_FRAMEWORK = {'DEFAULT_SCHEMA_CLASS':'rest_framework.schemas.coreapi.AutoSchema' }
