@@ -538,6 +538,7 @@ class ProductViewSet(viewsets.ViewSet):
 
 class MessageViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
+    serializer_class = MessageSerializer
 
     def list(self,request):
         message = Messages.objects.all()
