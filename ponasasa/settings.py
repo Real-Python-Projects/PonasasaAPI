@@ -84,7 +84,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthentication',
+        'rest_framework.permissions.IsAuthenticated',
         # 'core.permissions.IsPharmacyOwrner',
         # 'core.permissions.IsPharmacist',
         # 'core.permissions.IsCustomer',
