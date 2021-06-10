@@ -428,7 +428,7 @@ class PharmacyViewSet(viewsets.ViewSet):
     def retrieve(self, request, pk=None):
         queryset = Pharmacy.objects.all()
         pharmacy = get_object_or_404(queryset, pk=pk)
-        serializer = PharmacySerliazer(pharmacy, context={"request": request})
+        serializer = PharmacySerializer(pharmacy, context={"request": request})
 
         serializer_data = serializer.data
         # Accessing All the Medicine Details of Current Medicine ID ..... 
