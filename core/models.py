@@ -125,7 +125,7 @@ class PharmacyBranch(models.Model):
 
 class Pharmacy(models.Model):
     id=models.AutoField(primary_key=True)
-    name_of_pharmacy = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
     location_address = models.CharField(max_length=255)
     country = models.CharField(max_length=255, default=None)
     province = models.CharField(max_length=255, default=None)
