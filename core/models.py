@@ -136,6 +136,7 @@ class Pharmacy(models.Model):
     license_no = models.CharField(max_length=255)
     license_operate = models.FileField()
     health_safety_code = models.CharField(max_length=255)
+    health_safety_code_doc = models.FileField(max_length=255)
     about = models.TextField(max_length=150)
     website = models.CharField(max_length=255)
     contact_no=models.CharField(max_length=255)
