@@ -112,7 +112,7 @@ class CustomerProfile(models.Model):
  
 
 
-class Pharmacy(models.Model):
+class PharmacyBranch(models.Model):
     id=models.AutoField(primary_key=True)
     name=models.CharField(max_length=255)
     license_no=models.CharField(max_length=255)
@@ -123,7 +123,7 @@ class Pharmacy(models.Model):
     added_on=models.DateTimeField(auto_now_add=True)
     objects=models.Manager()
 
-class PharmacyBranch(models.Model):
+class Pharmacy(models.Model):
     id=models.AutoField(primary_key=True)
     name_of_pharmacy = models.CharField(max_length=255)
     location_address = models.CharField(max_length=255)
