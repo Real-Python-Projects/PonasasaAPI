@@ -1,3 +1,4 @@
+from django.db.models import fields
 from rest_framework import serializers, status
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
@@ -143,7 +144,8 @@ class PharmacistSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PharmacistProfile
-        fields = ['id','user']
+        # fields = ['id','user']
+        fields = '__all__'
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')
