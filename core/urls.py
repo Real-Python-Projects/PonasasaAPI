@@ -21,6 +21,7 @@ router.register('pharmacyowner', PharmacyOwnerProfileViewSet, basename='pharmacy
 router.register('pharmacist', PharmacistViewSet, basename='pharmacist')
 router.register('customer', CustomerViewSet, basename='customer')
 router.register('pharmacy', PharmacyViewSet, basename='pharmacy')
+router.register('pharmacyimages', PharmacyPhotosViewSet, basename='pharmacyimages')
 router.register('pharmacybranch', PharmacyBranchViewSet, basename='pharmacybranch')
 router.register('product', ProductViewSet, basename='product')
 router.register('productmedia', ProductMediaViewSet, basename='productmedia')
