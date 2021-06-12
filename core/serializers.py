@@ -211,6 +211,12 @@ class PharmacySerializer(serializers.ModelSerializer):
         model=Pharmacy
         fields="__all__"
 
+class PharmacySerializer(serializers.ModelSerializer):
+    class Meta:
+        model=PharmacyPhotos
+        fields="__all__"
+
+
 
 class PharmacyBranchSerializer(serializers.ModelSerializer):
     class Meta:

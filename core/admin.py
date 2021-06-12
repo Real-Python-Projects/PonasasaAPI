@@ -37,4 +37,5 @@ admin.site.register(Report)
 admin.site.register(Advertisement)
 admin.site.register(NotificationCustomer)
 admin.site.register(NotificationPharmacist)
+admin.site.register(PharmacyPhotos)
 

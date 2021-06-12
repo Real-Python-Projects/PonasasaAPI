@@ -123,6 +123,8 @@ class PharmacyBranch(models.Model):
     added_on=models.DateTimeField(auto_now_add=True)
     objects=models.Manager()
 
+
+
 class Pharmacy(models.Model):
     id=models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
@@ -144,6 +146,13 @@ class Pharmacy(models.Model):
     description=models.CharField(max_length=255)
     added_on=models.DateTimeField(auto_now_add=True)
     objects=models.Manager()
+    
+class PharmacyPhotos(models.Model):
+    name = models.CharField(max_length=255)
+    photos = models.ForeignKey(Pharmacy, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='pharmacy/')
+    default = models.BooleanField(default=False)
+
 
 class Product(models.Model):
     id=models.AutoField(primary_key=True)
