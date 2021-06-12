@@ -211,7 +211,7 @@ class PharmacySerializer(serializers.ModelSerializer):
         model=Pharmacy
         fields="__all__"
 
-class PharmacySerializer(serializers.ModelSerializer):
+class PharmacyPhotosSerializer(serializers.ModelSerializer):
     class Meta:
         model=PharmacyPhotos
         fields="__all__"

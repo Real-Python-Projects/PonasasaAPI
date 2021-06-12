@@ -449,6 +449,48 @@ class PharmacyViewSet(viewsets.ViewSet):
 
         return Response(dict_response)
 
+class PharmacyPhotosViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def list(self,request):
+        pharmacyphotos=PharmacyPhotos.objects.all()
+        serializer=PharmacyPhotosSerializer(pharmacyphotos,many=True,context={"request":request})
+        response_dict={"error":False,"message":"All PharmacyPhotos List Data","data":serializer.data}
+        return Response(response_dict)
+
+    def post(self,request):
+        try:
+            serializer= PharmacyPhotosSerializer(data=request.data,context={"request":request})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            dict_response={"error":False,"message":"Pharmacy Photo Data Save Successfully"}
+        except:
+            dict_response={"error":True,"message":"Error During Saving Company Data"}
+        return Response(dict_response)
+    
+    def retrieve(self, request, pk=None):
+        queryset = PharmacyPhotos.objects.all()
+        pharmacyphotos = get_object_or_404(queryset, pk=pk)
+        serializer = PharmacyPhotosSerializer(pharmacyphotos, context={"request": request})
+
+        serializer_data = serializer.data
+        # Accessing All the Medicine Details of Current Medicine ID ..... 
+        #pass
+
+        return Response({"error": False, "message": "Single Data Fetch", "data": serializer_data})
+
+    def update(self,request,pk=None):
+        try:
+            queryset=PharmacyPhotos.objects.all()
+            pharmacyphotos=get_object_or_404(queryset,pk=pk)
+            serializer=PharmacyPhotosSerializer(pharmacyphotos,data=request.data,context={"request":request})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            dict_response={"error":False,"message":"Successfully Updated Pharmacy Photo Data"}
+        except:
+            dict_response={"error":True,"message":"Error During Updating Pharmacy Photo Data"}
+
+        return Response(dict_response)
 
 class PharmacyBranchViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
