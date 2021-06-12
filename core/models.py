@@ -148,8 +148,8 @@ class Pharmacy(models.Model):
     objects=models.Manager()
     
 class PharmacyPhotos(models.Model):
-    name = models.CharField(max_length=255)
-    photos = models.ForeignKey(Pharmacy, on_delete=models.CASCADE)
+    name_of_image = models.CharField(max_length=255)
+    pharmacy = models.ForeignKey(Pharmacy, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='pharmacy/')
     default = models.BooleanField(default=False)
 
