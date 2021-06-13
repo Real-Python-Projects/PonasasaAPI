@@ -74,11 +74,22 @@ class PharmacyOwnerProfile(models.Model):
         return self.user.username
 
 
+class PharmacyBranch(models.Model):
+    id=models.AutoField(primary_key=True)
+    name=models.CharField(max_length=255)
+    license_no=models.CharField(max_length=255)
+    address=models.CharField(max_length=255)
+    contact_no=models.CharField(max_length=255)
+    email=models.CharField(max_length=255)
+    description=models.CharField(max_length=255)
+    added_on=models.DateTimeField(auto_now_add=True)
+    objects=models.Manager()
+
 class PharmacistProfile(models.Model):
     id=models.AutoField(primary_key=True)
     user = models.OneToOneField(CustomUser, models.SET_DEFAULT, default=None)
     gender = models.CharField(max_length=255)
-    profile_pic = models.FileField()
+    profile_pic = models.ImageField(upload_to='phamacist')
     address = models.TextField()
     country = models.CharField(max_length=255)
     province = models.CharField(max_length=255)
@@ -111,17 +122,6 @@ class CustomerProfile(models.Model):
  
  
 
-
-class PharmacyBranch(models.Model):
-    id=models.AutoField(primary_key=True)
-    name=models.CharField(max_length=255)
-    license_no=models.CharField(max_length=255)
-    address=models.CharField(max_length=255)
-    contact_no=models.CharField(max_length=255)
-    email=models.CharField(max_length=255)
-    description=models.CharField(max_length=255)
-    added_on=models.DateTimeField(auto_now_add=True)
-    objects=models.Manager()
 
 
 
