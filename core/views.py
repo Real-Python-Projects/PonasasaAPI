@@ -303,6 +303,8 @@ class PharmacistViewSet(viewsets.ModelViewSet):
                             status=status.HTTP_400_BAD_REQUEST)
         return Response({'response':'You must be authorised'})
 
+
+
 class CustomerViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = CustomerSerializer
