@@ -17,7 +17,8 @@ from django.contrib.auth.base_user import BaseUserManager
 
 #Spliting users in model using custom user
 class CustomUser(AbstractUser):
-    user_type_choices=((1,"Pharmacy Owner"),(2," Phermacist"),(3,"Customer"))
+    #user_type_choices=((1,"Pharmacy Owner"),(2," Pharmacist"),(3,"Customer"))
+    user_type_choices=((1,"Pharmacy Owner"),(2," Pharmacy"),(3,"Pharmacist"))
     user_type=models.CharField(max_length=255,choices=user_type_choices,default=3)
     # objects = models.UserManager()
     # role = models.CharField("User Type", max_length=10, choices=USER_TYPE, default='Customer')
