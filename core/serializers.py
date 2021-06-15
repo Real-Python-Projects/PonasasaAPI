@@ -19,7 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password')
+        fields = ('username', 'first_name', 'last_name', 'email','user_type')
 
     def create(self, validated_data):
         user = super().create(validated_data)
@@ -101,7 +101,7 @@ class PharmacyOwnerRegistrationSerializer(serializers.ModelSerializer):
  
     class Meta:
         model = PharmacyOwnerProfile
-        fields = '__all__'
+        fields = 'user_type'
  
     def create(self, validated_data):
         return PharmacyOwnerProfile.objects.create_student(**validated_data)
@@ -116,7 +116,7 @@ class PhamacistRegistrationSerializer(serializers.ModelSerializer):
  
     class Meta:
         model = PharmacistProfile
-        fields = '__all__'
+        fields = 'user_type'
  
     def create(self, validated_data):
         return PharmacistProfile.objects.create_employee(**validated_data)
@@ -131,7 +131,7 @@ class CustomerRegistrationSerializer(serializers.ModelSerializer):
  
     class Meta:
         model = CustomerProfile
-        fields = '__all__'
+        fields = 'user_type'
  
     def create(self, validated_data):
         return CustomerProfile.objects.create_employee(**validated_data)

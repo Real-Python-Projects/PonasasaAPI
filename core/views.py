@@ -303,7 +303,23 @@ class PharmacistViewSet(viewsets.ModelViewSet):
                             status=status.HTTP_400_BAD_REQUEST)
         return Response({'response':'You must be authorised'})
 
+class UserViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserSerializer
+    queryset = CustomUser.objects.all()
+    def get(self, format=None):
 
+        seller = CustomUser.objects.all()
+        serializer = UserSerializer(seller, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=ValueError):
+            serializer.create(validated_data=request.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.error_messages,
+                        status=status.HTTP_400_BAD_REQUEST)
 
 class CustomerViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]

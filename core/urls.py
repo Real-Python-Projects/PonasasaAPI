@@ -17,6 +17,7 @@ from core.mpesaurls import mpesa_urls
 router = routers.DefaultRouter()
 # router.register('customersignup', CustomerRegistrationViewSet, basename='customersignup')
 # router.register('userlogin', UserLoginViewSet, basename='userlogin')
+router.register('users', UserViewSet, basename='users')
 router.register('pharmacyowner', PharmacyOwnerProfileViewSet, basename='pharmacyowner')
 router.register('pharmacist', PharmacistViewSet, basename='pharmacist')
 router.register('customer', CustomerViewSet, basename='customer')
