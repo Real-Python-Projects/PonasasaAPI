@@ -853,6 +853,23 @@ class ProductMediaViewSet(viewsets.ViewSet):
             dict_response={"error":True,"message":"Error During Updating ProductMedia Data"}
 
         return Response(dict_response)
+
+class SummaryView(ProductMediaViewSet):
+    """Overwrite the get method to serve different 
+    content, e.g. statistical summary."""
+
+    def summarize(self, request, *args, **kwargs):
+        """This can be moved to a Mixin class."""
+        # make sure the filters of the parent class get applied
+        queryset = self.filter_queryset(self.get_queryset())
+        # do statistics here, e.g.
+        stats = {'count': queryset.count()}
+        # not using a serializer here since it is already a 
+        # form of serialization
+        return Response(stats)
+
+    def get(self, request, *args, **kwargs):
+        return self.summarize(request, *args, **kwargs)
     
 class CustomerOrderViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
