@@ -252,11 +252,26 @@ class ValidateView(APIView):
 #         return Response(serializer.error_messages,
 #                         status=status.HTTP_400_BAD_REQUEST)
 
- 
-class CustomerRegistrationViewSet(APIView):
+
+class PharmacyOwnerRegistrationViewSet(APIView):
     permission_classes = (IsAuthenticated,)
     renderer_classes = (UserJSONRenderer,)
-    serializer_class = CustomerRegistrationSerializer
+    serializer_class = PharmacyOwnerSerializer
+
+    @classmethod
+    def get_extra_actions(cls):
+        return []
+ 
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+ 
+class PharmacyRegistrationViewSet(APIView):
+    permission_classes = (IsAuthenticated,)
+    renderer_classes = (UserJSONRenderer,)
+    serializer_class = PharmacyRegistrationSerializer
 
     @classmethod
     def get_extra_actions(cls):
@@ -321,18 +336,18 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(serializer.error_messages,
                         status=status.HTTP_400_BAD_REQUEST)
 
-class CustomerViewSet(viewsets.ModelViewSet):
+class PharmacyViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
-    serializer_class = CustomerSerializer
-    queryset = CustomerProfile.objects.all()
+    serializer_class = PharmacySerializer
+    queryset = PharmacyProfile.objects.all()
     def get(self, format=None):
 
-        seller = CustomerProfile.objects.all()
+        seller = PharmacyProfile.objects.all()
         serializer = UserSerializer(seller, many=True)
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = CustomerSerializer(data=request.data)
+        serializer = PharmacySerializer(data=request.data)
         if serializer.is_valid(raise_exception=ValueError):
             serializer.create(validated_data=request.data)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -424,48 +439,7 @@ class PharmacyOwnerProfileViewSet(viewsets.ViewSet):
 
         return Response(dict_response)
 
-class PharmacyViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated]
 
-    def list(self,request):
-        pharmacy=Pharmacy.objects.all()
-        serializer=PharmacySerializer(pharmacy,many=True,context={"request":request})
-        response_dict={"error":False,"message":"All Pharmacy List Data","data":serializer.data}
-        return Response(response_dict)
-
-    def post(self,request):
-        try:
-            serializer= PharmacySerializer(data=request.data,context={"request":request})
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            dict_response={"error":False,"message":"Pharmacy Data Save Successfully"}
-        except:
-            dict_response={"error":True,"message":"Error During Saving Company Data"}
-        return Response(dict_response)
-    
-    def retrieve(self, request, pk=None):
-        queryset = Pharmacy.objects.all()
-        pharmacy = get_object_or_404(queryset, pk=pk)
-        serializer = PharmacySerializer(pharmacy, context={"request": request})
-
-        serializer_data = serializer.data
-        # Accessing All the Medicine Details of Current Medicine ID ..... 
-        #pass
-
-        return Response({"error": False, "message": "Single Data Fetch", "data": serializer_data})
-
-    def update(self,request,pk=None):
-        try:
-            queryset=Pharmacy.objects.all()
-            pharmacy=get_object_or_404(queryset,pk=pk)
-            serializer=PharmacySerializer(pharmacy,data=request.data,context={"request":request})
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            dict_response={"error":False,"message":"Successfully Updated Pharmacy Data"}
-        except:
-            dict_response={"error":True,"message":"Error During Updating Pharmacy Data"}
-
-        return Response(dict_response)
 
 class PharmacyPhotosViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]

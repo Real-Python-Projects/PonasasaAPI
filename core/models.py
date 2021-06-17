@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.conf import settings
 import uuid
-
+from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.contrib.auth.models import User
 from django.db import models
@@ -18,8 +18,19 @@ from django.contrib.auth.base_user import BaseUserManager
 #Spliting users in model using custom user
 class CustomUser(AbstractUser):
     #user_type_choices=((1,"Pharmacy Owner"),(2," Pharmacist"),(3,"Customer"))
-    user_type_choices=((1,"Pharmacy Owner"),(2," Pharmacy"),(3,"Pharmacist"))
-    user_type=models.CharField(max_length=255,choices=user_type_choices,default=3)
+    user_type_choices=((1,"Super Admin"),(2," Pharmacy Owner"),(3,"Pharmacist"))
+    user_type=models.CharField(max_length=255,choices=user_type_choices,default=2)
+    # username = models.CharField(blank=True,null=True,max_length=150)
+    # first_name = None
+    # last_name = None
+    # email = models.EmailField(_('email address'), unique=True)
+    # USERNAME_FIELD = 'email'
+    # REQUIRED_FIELDS = []
+    email = models.EmailField(_('email address'), unique=True) # changes email to unique and blank to false
+    
+
+    def __str__(self):
+        return self.email
     # objects = models.UserManager()
     # role = models.CharField("User Type", max_length=10, choices=USER_TYPE, default='Customer')
 
@@ -49,17 +60,17 @@ class PharmacistManager(BaseUserManager):
         pharmacist.save()
         return pharmacist
 
-class CustomerManager(BaseUserManager):
+class PharmacyManager(BaseUserManager):
  
-    def create_customer(self, first_name, last_name, email, designation, company, password=None):
+    def create_Pharmacy(self, first_name, last_name, email, designation, company, password=None):
         if email is None:
             raise TypeError('Users must have an email address.')
-        customer = CustomerProfile(first_name=first_name, last_name=last_name, 
+        Pharmacy = PharmacyProfile(first_name=first_name, last_name=last_name, 
                             email=self.normalize_email(email),
                             designation=designation, company=company)
-        customer.set_password(password)
-        customer.save()
-        return customer
+        Pharmacy.set_password(password)
+        Pharmacy.save()
+        return Pharmacy
 
 class PharmacyOwnerProfile(models.Model):
     id=models.AutoField(primary_key=True)
@@ -106,14 +117,34 @@ class PharmacistProfile(models.Model):
     def __str__(self):
         return self.user.username
 
-class CustomerProfile(models.Model):
+class PharmacyProfile(models.Model):
     id=models.AutoField(primary_key=True)
+    
     user = models.OneToOneField(CustomUser, models.SET_DEFAULT, default=None)
+    
+    name = models.CharField(max_length=255)
+    location_address = models.CharField(max_length=255,blank=True,null=True)
+    country = models.CharField(max_length=255, blank=True,null=True)
+    province = models.CharField(max_length=255, blank=True,null=True)
+    district = models.CharField(max_length=255, blank=True,null=True)
+    city = models.CharField(max_length=255, blank=True,null=True)
+    zip_code = models.CharField(max_length=255, blank=True,null=True)
+    phone_number = models.CharField(max_length=255, blank=True,null=True)
+    license_no = models.CharField(max_length=255,blank=True,null=True)
+    license_operate = models.FileField(blank=True,null=True)
+    health_safety_code = models.CharField(max_length=255,blank=True,null=True)
+    health_safety_code_doc = models.FileField(max_length=255,blank=True,null=True)
+    about = models.TextField(max_length=150,blank=True,null=True)
+    website = models.CharField(max_length=255,blank=True,null=True)
+    contact_no=models.CharField(max_length=255,blank=True,null=True)
+    email=models.CharField(max_length=255,blank=True,null=True)
+    description=models.CharField(max_length=255,blank=True,null=True)
+    added_on=models.DateTimeField(auto_now_add=True)
     objects=models.Manager()
 
 
     def __str__(self):
-        return self.user.username
+        return self.name
 
 
 # class UserManager(BaseUserManager):
@@ -126,31 +157,10 @@ class CustomerProfile(models.Model):
 
 
 
-class Pharmacy(models.Model):
-    id=models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
-    location_address = models.CharField(max_length=255)
-    country = models.CharField(max_length=255, default=None)
-    province = models.CharField(max_length=255, default=None)
-    district = models.CharField(max_length=255, default=None)
-    city = models.CharField(max_length=255, default=None)
-    zip_code = models.CharField(max_length=255, default=None)
-    phone_number = models.CharField(max_length=255, default=None)
-    license_no = models.CharField(max_length=255)
-    license_operate = models.FileField()
-    health_safety_code = models.CharField(max_length=255)
-    health_safety_code_doc = models.FileField(max_length=255)
-    about = models.TextField(max_length=150)
-    website = models.CharField(max_length=255)
-    contact_no=models.CharField(max_length=255)
-    email=models.CharField(max_length=255)
-    description=models.CharField(max_length=255)
-    added_on=models.DateTimeField(auto_now_add=True)
-    objects=models.Manager()
     
 class PharmacyPhotos(models.Model):
     name_of_image = models.CharField(max_length=255)
-    pharmacy = models.ForeignKey(Pharmacy, on_delete=models.CASCADE)
+    pharmacy = models.ForeignKey(PharmacyProfile, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='pharmacy/')
     default = models.BooleanField(default=False)
 
@@ -256,7 +266,7 @@ class NotificationPharmacist(models.Model):
 
 class NotificationCustomer(models.Model):
     id = models.AutoField(primary_key=True)
-    customer_id = models.ForeignKey(CustomerProfile, on_delete=models.CASCADE)
+    # customer_id = models.ForeignKey(CustomerProfile, on_delete=models.CASCADE)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
@@ -365,15 +375,15 @@ def create_user_profile(sender,instance,created,**kwargs):
         if instance.user_type==1:
             PharmacyOwnerProfile.objects.create(user=instance)
         if instance.user_type==2:
-            PharmacistProfile.objects.create(user=instance)
+            PharmacyProfile.objects.create(user=instance)
         if instance.user_type==3:
-            CustomerProfile.objects.create(user=instance)
+            PharmacistProfile.objects.create(user=instance)
 
 @receiver(post_save,sender=CustomUser)
 def save_user_profile(sender,instance,**kwargs):
     if instance.user_type==1:
         instance.pharmacyownerprofile.save()
     if instance.user_type==2:
-        instance.phermacistprofile.save()
+        instance.pharmacyprofile.save()
     if instance.user_type==3:
-        instance.customerprofile.save()
+        instance.pharmacistprofile.save()

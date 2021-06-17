@@ -1,7 +1,28 @@
 import jwt
 from django.conf import settings
 from rest_framework import authentication, exceptions
-from .models import PharmacistProfile, PharmacyOwnerProfile,CustomerProfile
+from .models import PharmacistProfile, PharmacyOwnerProfile,PharmacyProfile
+
+from django.contrib.auth.backends import ModelBackend
+from django.contrib.auth import get_user_model
+from django.db.models import Q
+
+
+UserModel = get_user_model()
+
+
+class EmailBackend(ModelBackend):
+    def authenticate(self, request, username=None, password=None, **kwargs):
+        try:
+            user = UserModel.objects.get(Q(username__iexact=username) | Q(email__iexact=username))
+        except UserModel.DoesNotExist:
+            UserModel().set_password(password)
+            return
+        except UserModel.MultipleObjectsReturned:
+            user = UserModel.objects.filter(Q(username__iexact=username) | Q(email__iexact=username)).order_by('id').first()
+
+        if user.check_password(password) and self.user_can_authenticate(user):
+            return user
  
 class JWTPharmacyOwnerAuthentication(authentication.BaseAuthentication):
     authentication_header_prefix = 'Token'
@@ -219,8 +240,8 @@ class JWTCustomerAuthentication(authentication.BaseAuthentication):
             raise exceptions.AuthenticationFailed(msg)
  
         try:
-            user = CustomerProfile.objects.get(pk=payload['id'])
-        except CustomerProfile.DoesNotExist:
+            user = PharmacyProfile.objects.get(pk=payload['id'])
+        except PharmacyProfile.DoesNotExist:
             msg = 'No user matching this token was found.'
             raise exceptions.AuthenticationFailed(msg)
             return

@@ -20,7 +20,6 @@ router = routers.DefaultRouter()
 router.register('users', UserViewSet, basename='users')
 router.register('pharmacyowner', PharmacyOwnerProfileViewSet, basename='pharmacyowner')
 router.register('pharmacist', PharmacistViewSet, basename='pharmacist')
-router.register('customer', CustomerViewSet, basename='customer')
 router.register('pharmacy', PharmacyViewSet, basename='pharmacy')
 router.register('pharmacyimages', PharmacyPhotosViewSet, basename='pharmacyimages')
 router.register('pharmacybranch', PharmacyBranchViewSet, basename='pharmacybranch')
@@ -44,7 +43,7 @@ urlpatterns = [
 
    
     # #...
-    path('api/users/', CustomerRegistrationViewSet.as_view()),
+    path('api/users/', PharmacyRegistrationViewSet.as_view()),
     path('api/users/login/', UserLoginViewSet.as_view()),
     path('api/', include(router.urls)),
     path('docs/', schema_view),
