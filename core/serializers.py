@@ -171,7 +171,7 @@ class PharmacySerializer(serializers.ModelSerializer):
         model = PharmacyProfile
         fields = ['id','user','address','website','rating','service_provided','time_operation'
         ,'deliver_information','license_number','license_number_document','health_safety_code','health_safety_code_doc','about'
-        ,'photos','patners','coments']
+        ,'photos','patners','coments','debut']
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')
