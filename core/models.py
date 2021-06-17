@@ -126,7 +126,7 @@ class PharmacyProfile(models.Model):
     website = models.CharField(max_length=255,blank=True,null=True)
     contact_number = models.CharField(max_length=255,blank=True,null=True)
     rating = models.IntegerField(blank=True,null=True)
-    service_provided = models.CharField(max_length=255)
+    service_provided = models.CharField(max_length=255,blank=True,null=True)
     time_operation=models.DateTimeField(auto_now_add=True)
     debut=models.DateTimeField(auto_now=True)
     deliver_information = models.CharField(max_length=255, blank=True,null=True)
