@@ -253,7 +253,7 @@ STATIC_ROOT = os.path.join(BASE_DIR,"staticfiles")
 
 # Provide default User Model as AUTH_USER_MOEL
 AUTH_USER_MODEL = "core.CustomUser"
-# AUTHENTICATION_BACKENDS = ['core.backends.EmailBackend'] # new
+AUTHENTICATION_BACKENDS = ['core.backends.EmailBackend'] # new
 
 
 # # Add two new backends under default authentication
