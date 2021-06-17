@@ -96,11 +96,12 @@ class PharmacyBranch(models.Model):
     description=models.CharField(max_length=255)
     added_on=models.DateTimeField(auto_now_add=True)
     objects=models.Manager()
+                     
 
 class PharmacistProfile(models.Model):
     id=models.AutoField(primary_key=True)
     user = models.OneToOneField(CustomUser, models.SET_DEFAULT, default=None)
-    gender = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
     profile_pic = models.ImageField(upload_to='phamacist')
     address = models.TextField()
     country = models.CharField(max_length=255)
@@ -110,7 +111,7 @@ class PharmacistProfile(models.Model):
     zip_code = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=255)
     education = models.CharField(max_length=255)
-    workplace = models.CharField(max_length=255)
+    work_place = models.CharField(max_length=255)
     objects=models.Manager()
 
 
@@ -121,30 +122,27 @@ class PharmacyProfile(models.Model):
     id=models.AutoField(primary_key=True)
     
     user = models.OneToOneField(CustomUser, models.SET_DEFAULT, default=None)
-    
-    name = models.CharField(max_length=255)
-    location_address = models.CharField(max_length=255,blank=True,null=True)
-    country = models.CharField(max_length=255, blank=True,null=True)
-    province = models.CharField(max_length=255, blank=True,null=True)
-    district = models.CharField(max_length=255, blank=True,null=True)
-    city = models.CharField(max_length=255, blank=True,null=True)
-    zip_code = models.CharField(max_length=255, blank=True,null=True)
-    phone_number = models.CharField(max_length=255, blank=True,null=True)
-    license_no = models.CharField(max_length=255,blank=True,null=True)
-    license_operate = models.FileField(blank=True,null=True)
+    address = models.CharField(max_length=255,blank=True,null=True)
+    website = models.CharField(max_length=255,blank=True,null=True)
+    contact_number = models.CharField(max_length=255,blank=True,null=True)
+    rating = models.IntegerField(blank=True,null=True)
+    service_provided = models.CharField(max_length=255)
+    time_operation=models.DateTimeField(auto_now_add=True)
+    added_on=models.DateTimeField(auto_now_add=True)
+    deliver_information = models.CharField(max_length=255, blank=True,null=True)
+    license_number = models.CharField(max_length=255,blank=True,null=True)
+    license_number_document = models.FileField(blank=True,null=True)
     health_safety_code = models.CharField(max_length=255,blank=True,null=True)
     health_safety_code_doc = models.FileField(max_length=255,blank=True,null=True)
     about = models.TextField(max_length=150,blank=True,null=True)
-    website = models.CharField(max_length=255,blank=True,null=True)
-    contact_no=models.CharField(max_length=255,blank=True,null=True)
-    email=models.CharField(max_length=255,blank=True,null=True)
-    description=models.CharField(max_length=255,blank=True,null=True)
-    added_on=models.DateTimeField(auto_now_add=True)
+    photos = models.ImageField(upload_to='pharmacy',blank=True,null=True)
+    patners = models.CharField(max_length=255, blank=True,null=True)
+    coments = models.CharField(max_length=255, blank=True,null=True)
     objects=models.Manager()
 
 
     def __str__(self):
-        return self.name
+        return self.website
 
 
 # class UserManager(BaseUserManager):
@@ -166,26 +164,30 @@ class PharmacyPhotos(models.Model):
 
 
 class Product(models.Model):
-    id=models.AutoField(primary_key=True)
+    currently_logged_in_pharmacy_id=models.AutoField(primary_key=True)
+    profile_image = models.ImageField()
     name=models.CharField(max_length=255)
     code = models.CharField(max_length=255)
     unit = models.CharField(max_length=255)
-    price=models.IntegerField()
+    total_price=models.IntegerField()
     gross=models.IntegerField()
-    size=models.CharField(max_length=255)
+    pack_size=models.CharField(max_length=255)
     strength=models.CharField(max_length=255)
-    instock=models.IntegerField()
-    reader_limit=models.CharField(max_length=255)
-    expire_date=models.DateField()
-    added_by_pharmacist=models.ForeignKey(PharmacistProfile,on_delete=models.CASCADE)
-    mfg_date=models.DateField()
+    in_stock=models.IntegerField()
+    reorder_limit=models.CharField(max_length=255)
+
+    # expire_date=models.DateField()
+    # added_by_pharmacist=models.ForeignKey(PharmacistProfile,on_delete=models.CASCADE)
+    # mfg_date=models.DateField()
+
     description=models.CharField(max_length=255)
     attention=models.CharField(max_length=255)
     frequecy=models.CharField(max_length=255)
     composition=models.CharField(max_length=255)
     notes=models.CharField(max_length=255)
-    added_on=models.DateTimeField(auto_now_add=True)
-    edited_on=models.DateTimeField(auto_now_add=True)
+
+    # added_on=models.DateTimeField(auto_now_add=True)
+    # edited_on=models.DateTimeField(auto_now_add=True)
     objects=models.Manager()
 
 class ProductMedia(models.Model):

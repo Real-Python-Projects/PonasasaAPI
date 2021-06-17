@@ -50,8 +50,8 @@ INSTALLED_APPS = [
      # required for serving swagger ui's css/js files
     'drf_yasg',
     'corsheaders',
-    'rest_framework.authtoken',
-    'djoser',
+    # 'rest_framework.authtoken',
+    # 'djoser',
     'rest_framework_swagger',
     'mpesa',
 
@@ -79,16 +79,16 @@ PHONE_VERIFICATION = {
 
 #configure DRF
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-        # 'core.permissions.IsPharmacyOwrner',
-        # 'core.permissions.IsPharmacist',
-        # 'core.permissions.IsCustomer',
-    ],
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'rest_framework.authentication.TokenAuthentication',
+    #     'rest_framework.authentication.SessionAuthentication',
+    # ),
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticated',
+    #     # 'core.permissions.IsPharmacyOwrner',
+    #     # 'core.permissions.IsPharmacist',
+    #     # 'core.permissions.IsCustomer',
+    # ],
     'DEFAULT_SCHEMA_CLASS':'rest_framework.schemas.coreapi.AutoSchema' ,
 
     # Parser classes priority-wise for Swagger
@@ -99,10 +99,10 @@ REST_FRAMEWORK = {
     ],
 }
 
-# configure Djoser
-DJOSER = {
-    "USER_ID_FIELD": "username"
-}
+# # configure Djoser
+# DJOSER = {
+#     "USER_ID_FIELD": "username"
+# }
 
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -253,7 +253,7 @@ STATIC_ROOT = os.path.join(BASE_DIR,"staticfiles")
 
 # Provide default User Model as AUTH_USER_MOEL
 AUTH_USER_MODEL = "core.CustomUser"
-AUTHENTICATION_BACKENDS = ['core.backends.EmailBackend'] # new
+# AUTHENTICATION_BACKENDS = ['core.backends.EmailBackend'] # new
 
 
 # # Add two new backends under default authentication

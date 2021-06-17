@@ -131,7 +131,9 @@ class PharmacyRegistrationSerializer(serializers.ModelSerializer):
  
     class Meta:
         model = PharmacyProfile
-        fields = '__all__'
+        fields = ['id','user','address','website','rating','service_provided','time_operation'
+        ,'deliver_information','license_number','license_number_document','health_safety_code','health_safety_code_doc','about'
+        ,'photos','patners','coments','token','password']
  
     def create(self, validated_data):
         return PharmacyProfile.objects.create_employee(**validated_data)
@@ -144,8 +146,9 @@ class PharmacistSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PharmacistProfile
-        fields = ['id','user']
+        fields = ['user','profile_pic','name','address','country','province','city','district','zip_code','phone_number','education','work_place']
         
+
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')
@@ -166,7 +169,9 @@ class PharmacySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PharmacyProfile
-        fields = ['id','user','name','location_address','country','province','district','city','zip_code','phone_number','license_no','license_operate','health_safety_code','health_safety_code_doc','about','about','website','contact_no','email','description']
+        fields = ['id','user','address','website','rating','service_provided','time_operation'
+        ,'deliver_information','license_number','license_number_document','health_safety_code','health_safety_code_doc','about'
+        ,'photos','patners','coments']
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')
@@ -224,10 +229,11 @@ class PharmacyBranchSerializer(serializers.ModelSerializer):
         model=PharmacyBranch
         fields="__all__"
 
+
 class ProductSerliazer(serializers.ModelSerializer):
     class Meta:
         model=Product
-        fields="__all__"
+        fields= ['profile_image','name','code','unit','pack_size','strength','in_stock','reorder_limit','total_price','gross','description','attention','frequency','composition','notes']
 
 class ProductMediaSerializer(serializers.ModelSerializer):
     class Meta:
