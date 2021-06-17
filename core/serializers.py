@@ -133,7 +133,7 @@ class PharmacyRegistrationSerializer(serializers.ModelSerializer):
         model = PharmacyProfile
         fields = ['id','user','address','website','rating','service_provided','time_operation'
         ,'deliver_information','license_number','license_number_document','health_safety_code','health_safety_code_doc','about'
-        ,'photos','patners','coments','token','password']
+        ,'photos','patners','coments','token','password','debut']
  
     def create(self, validated_data):
         return PharmacyProfile.objects.create_employee(**validated_data)
