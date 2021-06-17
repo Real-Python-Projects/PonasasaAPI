@@ -169,7 +169,7 @@ class PharmacySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PharmacyProfile
-        fields = ['id','user','address','website','rating','service_provided','time_operation'
+        fields = ['id','user','address','website','service_provided','rating','time_operation'
         ,'deliver_information','license_number','license_number_document','health_safety_code','health_safety_code_doc','about'
         ,'photos','patners','coments','debut']
 

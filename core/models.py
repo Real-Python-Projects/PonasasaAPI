@@ -20,13 +20,13 @@ class CustomUser(AbstractUser):
     #user_type_choices=((1,"Pharmacy Owner"),(2," Pharmacist"),(3,"Customer"))
     user_type_choices=((1,"Super Admin"),(2," Pharmacy Owner"),(3,"Pharmacist"))
     user_type=models.CharField(max_length=255,choices=user_type_choices,default=2)
-    # username = models.CharField(blank=True,null=True,max_length=150)
+    username = None
     # first_name = None
     # last_name = None
     # email = models.EmailField(_('email address'), unique=True)
-    # USERNAME_FIELD = 'email'
-    # REQUIRED_FIELDS = []
-    email = models.EmailField(_('email address'), unique=True) # changes email to unique and blank to false
+    email = models.EmailField(_('email address'),unique=True) # changes email to unique and blank to false
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
     
 
     def __str__(self):
@@ -125,7 +125,7 @@ class PharmacyProfile(models.Model):
     address = models.CharField(max_length=255,blank=True)
     website = models.CharField(max_length=255,blank=True)
     contact_number = models.CharField(max_length=255,blank=True)
-    rating = models.IntegerField(blank=True)
+    rating = models.IntegerField(default=0)
     service_provided = models.CharField(max_length=255,blank=True)
     time_operation=models.DateTimeField(auto_now_add=True)
     debut=models.DateTimeField(auto_now=True)
