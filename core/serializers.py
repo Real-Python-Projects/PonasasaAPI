@@ -19,7 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('email', 'password')
+        fields = ('username', 'password')
 
     def create(self, validated_data):
         user = super().create(validated_data)
@@ -163,28 +163,95 @@ class PharmacistSerializer(serializers.ModelSerializer):
         )
         return buyer
 
+
+
+
+
 class PharmacySerializer(serializers.ModelSerializer):
 
     user = UserSerializer(required=True)
 
     class Meta:
         model = PharmacyProfile
-        fields = ['id','user','address','website','service_provided','rating','time_operation'
-        ,'deliver_information','license_number','license_number_document','health_safety_code','health_safety_code_doc','about'
-        ,'photos','patners','coments','debut']
+        fields = ('user','contact_number','address','website','rating','service_provided','time_operation','deliver_information','license_number','license_number_document','health_safety_code','health_safety_code_doc','about'
+        ,'photos','patners','coments','debut')
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')
         user = UserSerializer.create(
             UserSerializer(), validated_data=user_data)
-        buyer, created = PharmacyProfile.objects.update_or_create(
-            user=user,
-            # mobileNo=validated_data.pop('mobileNo'),
-            # location=validated_data.pop('location'),
-            # address=validated_data.pop('address'),
+        seller, created = PharmacyProfile.objects.update_or_create(user=user,
+                                                                  contact_number=validated_data.pop(
+                                                                     'contact_number'),
+                                                                     
+                                                                 address=validated_data.pop(
+                                                                    'address'),
+                                                                 website=validated_data.pop(
+                                                                     'website'),
+                                                                 rating=validated_data.pop(
+                                                                     'rating'),
+                                                                service_provided=validated_data.pop(
+                                                                    'service_provided'),
+                                                                deliver_information=validated_data.pop(
+                                                                     'deliver_information'),
+                                                                license_number=validated_data.pop(
+                                                                     'license_number'),
+                                                                license_number_document=validated_data.pop(
+                                                                     'license_number_document'),
+                                                                health_safety_code=validated_data.pop(
+                                                                     'health_safety_code'),
+                                                                health_safety_code_doc=validated_data.pop(
+                                                                     'health_safety_code_doc'),
+                                                                about=validated_data.pop(
+                                                                     'about'),
+                                                                photos=validated_data.pop(
+                                                                     'photos'),
+                                                                patners=validated_data.pop(
+                                                                     'patners'),
+                                                                coments=validated_data.pop(
+                                                                      'coments'),
+                                                               
 
-        )
-        return buyer
+                                                                 )
+        return seller
+
+
+
+
+
+
+
+
+# class PharmacySerializer(serializers.ModelSerializer):
+
+#     user = UserSerializer(required=True)
+
+#     class Meta:
+#         model = PharmacyProfile
+#         # fields = ['id','user','address','website','service_provided','rating','time_operation'
+#         # ,'deliver_information','license_number','license_number_document','health_safety_code','health_safety_code_doc','about'
+#         # ,'photos','patners','coments','debut']
+#         fields = ('user','address')
+
+#     def create(self, validated_data):
+#         user_data = validated_data.pop('user','address')
+#         user = UserSerializer.create(
+#             UserSerializer(), validated_data=user_data)
+#         buyer, created = PharmacyProfile.objects.update_or_create(
+#             user=user,
+#                                                                  address=validated_data.pop(
+#                                                                      'address'),
+#                                                                 #  cnic=validated_data.pop(
+#                                                                 #      'cnic'),
+#                                                                 #  city=validated_data.pop(
+#                                                                 #      'city'),
+#                                                                 #  address=validated_data.pop(
+#                                                                 #      'address'),
+#                                                                 #  shop_name=validated_data.pop(
+#                                                                 #      'shop_name'),
+
+#         )
+#         return buyer
 
     
 

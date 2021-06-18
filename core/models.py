@@ -18,19 +18,19 @@ from django.contrib.auth.base_user import BaseUserManager
 #Spliting users in model using custom user
 class CustomUser(AbstractUser):
     #user_type_choices=((1,"Pharmacy Owner"),(2," Pharmacist"),(3,"Customer"))
-    user_type_choices=((1,"Super Admin"),(2," Pharmacy Owner"),(3,"Pharmacist"))
+    user_type_choices=((1,"SuperAdmin"),(2," PharmacyProfile"),(3,"Pharmacist"))
     user_type=models.CharField(max_length=255,choices=user_type_choices,default=2)
-    username = None
+    # username = None
     # first_name = None
     # last_name = None
     # email = models.EmailField(_('email address'), unique=True)
-    email = models.EmailField(_('email address'),unique=True) # changes email to unique and blank to false
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    # email = models.EmailField(_('email address'),unique=True) # changes email to unique and blank to false
+    # USERNAME_FIELD = 'email'
+    # REQUIRED_FIELDS = ['user_type']
     
 
-    def __str__(self):
-        return self.email
+    # def __str__(self):
+    #     return self.email
     # objects = models.UserManager()
     # role = models.CharField("User Type", max_length=10, choices=USER_TYPE, default='Customer')
 
@@ -60,17 +60,7 @@ class PharmacistManager(BaseUserManager):
         pharmacist.save()
         return pharmacist
 
-class PharmacyManager(BaseUserManager):
- 
-    def create_Pharmacy(self, first_name, last_name, email, designation, company, password=None):
-        if email is None:
-            raise TypeError('Users must have an email address.')
-        Pharmacy = PharmacyProfile(first_name=first_name, last_name=last_name, 
-                            email=self.normalize_email(email),
-                            designation=designation, company=company)
-        Pharmacy.set_password(password)
-        Pharmacy.save()
-        return Pharmacy
+
 
 class PharmacyOwnerProfile(models.Model):
     id=models.AutoField(primary_key=True)
@@ -117,48 +107,48 @@ class PharmacistProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+class PharmacyManager(BaseUserManager):
+ 
+    def create_Pharmacy(self, first_name, last_name, email, designation, address, password=None):
+        if email is None:
+            raise TypeError('Users must have an email address.')
+        pharmacy = PharmacyProfile(first_name=first_name, last_name=last_name, 
+                            email=self.normalize_email(email),
+                            designation=designation, address=address)
+        pharmacy.set_password(password)
+        pharmacy.save()
+        return pharmacy
 
 class PharmacyProfile(models.Model):
-    id=models.AutoField(primary_key=True)
-    
-    user = models.OneToOneField(CustomUser, models.SET_DEFAULT, default=None)
-    address = models.CharField(max_length=255)
-    website = models.CharField(max_length=255)
-    contact_number = models.CharField(max_length=255)
-    rating = models.IntegerField(default=0)
-    service_provided = models.CharField(max_length=255)
-    time_operation=models.DateTimeField(auto_now_add=True)
+    id=models.AutoField(primary_key=True, default=None)
+    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True,related_name="pharmacyprofile")
+    address = models.CharField(max_length=255,null=True)
+    website = models.CharField(max_length=255,null=True)
+    contact_number = models.CharField(max_length=255,null=True)
+    rating = models.IntegerField(null=True)
+    service_provided = models.CharField(max_length=255,null=True)
+    time_operation=models.DateTimeField(auto_now=True)
     debut=models.DateTimeField(auto_now=True)
-    deliver_information = models.CharField(max_length=255, blank=True)
-    license_number = models.CharField(max_length=255)
-    license_number_document = models.FileField(blank=True)
-    health_safety_code = models.CharField(max_length=255)
-    health_safety_code_doc = models.FileField(max_length=255)
-    about = models.TextField(max_length=150)
-    photos = models.ImageField(upload_to='pharmacy')
-    patners = models.CharField(max_length=255)
-    coments = models.CharField(max_length=255)
-    objects=models.Manager()
+    deliver_information = models.CharField(max_length=255, null=True)
+    license_number = models.CharField(max_length=255,null=True)
+    license_number_document = models.FileField(null=True)
+    health_safety_code = models.CharField(max_length=255,null=True)
+    health_safety_code_doc = models.FileField(max_length=255,null=True)
+    about = models.TextField(max_length=150,null=True)
+    photos = models.ImageField(upload_to='pharmacy',null=True)
+    patners = models.CharField(max_length=255, null=True)
+    coments = models.CharField(max_length=255, null=True)
+    objects=PharmacyManager()
+   
 
 
     def __str__(self):
-        return self.website
-
-
-# class UserManager(BaseUserManager):
- 
-#     def get_by_natural_key(self, email):
-#         return self.get(email=email)
- 
- 
-
-
-
+        return self.user.username
 
     
 class PharmacyPhotos(models.Model):
     name_of_image = models.CharField(max_length=255)
-    pharmacy = models.ForeignKey(PharmacyProfile, on_delete=models.CASCADE)
+    pharmacy = models.ForeignKey(PharmacyProfile, on_delete=models.DO_NOTHING)
     image = models.ImageField(upload_to='pharmacy/')
     default = models.BooleanField(default=False)
 
@@ -374,6 +364,7 @@ class Wallet(BaseModel):
 @receiver(post_save,sender=CustomUser)
 def create_user_profile(sender,instance,created,**kwargs):
     if created:
+        
         if instance.user_type==1:
             PharmacyOwnerProfile.objects.create(user=instance)
         if instance.user_type==2:
@@ -381,11 +372,13 @@ def create_user_profile(sender,instance,created,**kwargs):
         if instance.user_type==3:
             PharmacistProfile.objects.create(user=instance)
 
-@receiver(post_save,sender=CustomUser)
-def save_user_profile(sender,instance,**kwargs):
-    if instance.user_type==1:
-        instance.pharmacyownerprofile.save()
-    if instance.user_type==2:
-        instance.pharmacyprofile.save()
-    if instance.user_type==3:
-        instance.pharmacistprofile.save()
+# @receiver(post_save,sender=CustomUser)
+# def save_user_profile(sender,instance,**kwargs):
+#     instance.pharmacyprofile.save()
+    # if instance.user_type==1:
+    #     instance.pharmacyownerprofile.save()
+    # if instance.user_type==2:
+    #     instance.pharmacyprofile.save()
+    # if instance.user_type==3:
+    #     instance.pharmacistprofile.save()
+

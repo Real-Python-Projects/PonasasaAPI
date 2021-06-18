@@ -18,8 +18,8 @@ admin.site.site_header = "Ponasasa"
 
 
 class PaymentTransactionAdmin(admin.ModelAdmin):
-    list_display = ("phone_number", "amount", "isFinished",
-                    "isSuccessFull", "trans_id", 'date_created','date_modified')
+    list_display = ["phone_number", "amount", "isFinished",
+                    "isSuccessFull", "trans_id", 'date_created','date_modified']
 
 admin.site.register(PaymentTransaction, PaymentTransactionAdmin)
 admin.site.register(Wallet)
