@@ -19,7 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('username', 'password')
+        fields = ('username', 'password','user_type')
 
     def create(self, validated_data):
         user = super().create(validated_data)
