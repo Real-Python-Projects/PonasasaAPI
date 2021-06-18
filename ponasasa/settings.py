@@ -50,8 +50,8 @@ INSTALLED_APPS = [
      # required for serving swagger ui's css/js files
     'drf_yasg',
     'corsheaders',
-    # 'rest_framework.authtoken',
-    # 'djoser',
+    'rest_framework.authtoken',
+    'djoser',
     'rest_framework_swagger',
     'mpesa',
 
@@ -100,9 +100,9 @@ REST_FRAMEWORK = {
 }
 
 # # configure Djoser
-# DJOSER = {
-#     "USER_ID_FIELD": "username"
-# }
+DJOSER = {
+    "USER_ID_FIELD": "username"
+ }
 
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -257,23 +257,27 @@ AUTHENTICATION_BACKENDS = ['core.backends.EmailBackend'] # new
 
 
 # # Add two new backends under default authentication
-# REST_FRAMEWORK = {
-#   'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'core.backends.JWTPharmacyOwnerAuthentication',
-#         'core.backends.JWTPharmacistAuthentication',
-#         'core.backends.JWTCustomerAuthentication',
-#         'rest_framework.authentication.SessionAuthentication',
-#   ),
-#       'DEFAULT_PERMISSION_CLASSES': [
-#         'rest_framework.permissions.AllowAny',
-#     ]
-# }
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticated',
+    #     # 'core.permissions.IsPharmacyOwrner',
+    #     # 'core.permissions.IsPharmacist',
+    #     # 'core.permissions.IsCustomer',
+    # ],
+    'DEFAULT_SCHEMA_CLASS':'rest_framework.schemas.coreapi.AutoSchema' ,
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_PERMISSION_CLASSES': [
-#         'rest_framework.permissions.All',
-#     ]
-# }
+    # Parser classes priority-wise for Swagger
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser',
+        'rest_framework.parsers.JSONParser',
+    ],
+}
+
 
 
 
