@@ -122,7 +122,7 @@ class PharmacyManager(BaseUserManager):
 class PharmacyProfile(models.Model):
     id=models.AutoField(primary_key=True, default=None)
     user = models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True,related_name="pharmacyprofile")
-    address = models.CharField(max_length=255,null=True)
+    address = models.CharField(max_length=255)
     website = models.CharField(max_length=255,null=True)
     contact_number = models.CharField(max_length=255,null=True)
     rating = models.IntegerField(null=True)
