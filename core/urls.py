@@ -22,7 +22,7 @@ router.register('pharmacyowner', PharmacyOwnerProfileViewSet, basename='pharmacy
 router.register('pharmacist', PharmacistViewSet, basename='pharmacist')
 router.register('pharmacy', PharmacyViewSet, basename='pharmacy')
 router.register('pharmacyimages', PharmacyPhotosViewSet, basename='pharmacyimages')
-router.register('pharmacybranch', PharmacyBranchViewSet, basename='pharmacybranch')
+# router.register('pharmacybranch', PharmacyBranchViewSet, basename='pharmacybranch')
 router.register('product', ProductViewSet, basename='product')
 router.register('productmedia', ProductMediaViewSet, basename='productmedia')
 router.register('customerorder', CustomerOrderViewSet, basename='customerorder')
@@ -50,6 +50,9 @@ urlpatterns = [
     path('mpesa/', include(mpesa_urls)),
    
    path('api/v1/', include('core.djoser')),
+
+   path('api/pharmacybranch/', views.PharmacyBranch_list),
+   path('api/pharmacybranch/<int:id>/', views.PharmacyBranch_detail),
 ]
 
 

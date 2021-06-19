@@ -75,9 +75,50 @@ class PharmacyOwnerProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+class PharmacyManager(BaseUserManager):
+ 
+    def create_Pharmacy(self, first_name, last_name, email, designation, address, password=None):
+        if email is None:
+            raise TypeError('Users must have an email address.')
+        pharmacy = PharmacyProfile(first_name=first_name, last_name=last_name, 
+                            email=self.normalize_email(email),
+                            designation=designation, address=address)
+        pharmacy.set_password(password)
+        pharmacy.save()
+        return pharmacy
+
+
+class PharmacyProfile(models.Model):
+    id=models.AutoField(primary_key=True, default=None)
+    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True,related_name="pharmacyprofile")
+    address = models.CharField(max_length=255)
+    website = models.CharField(max_length=255,null=True)
+    contact_number = models.CharField(max_length=255,null=True)
+    rating = models.IntegerField(null=True)
+    service_provided = models.CharField(max_length=255,null=True)
+    time_operation=models.DateTimeField(auto_now=True)
+    debut=models.DateTimeField(auto_now=True)
+    deliver_information = models.CharField(max_length=255, null=True)
+    license_number = models.CharField(max_length=255,null=True)
+    license_number_document = models.FileField(null=True)
+    health_safety_code = models.CharField(max_length=255,null=True)
+    health_safety_code_doc = models.FileField(max_length=255,null=True)
+    about = models.TextField(max_length=150,null=True)
+    photos = models.ImageField(upload_to='pharmacy',null=True)
+    patners = models.CharField(max_length=255, null=True)
+    coments = models.CharField(max_length=255, null=True)
+    objects=PharmacyManager()
+   
+
+
+    def __str__(self):
+        return self.user.username
+
+
 
 class PharmacyBranch(models.Model):
     id=models.AutoField(primary_key=True)
+    user = models.ForeignKey(PharmacyProfile, blank=True, null=True, on_delete=models.SET_DEFAULT, default=None)
     name=models.CharField(max_length=255)
     license_no=models.CharField(max_length=255)
     address=models.CharField(max_length=255)
@@ -107,43 +148,9 @@ class PharmacistProfile(models.Model):
 
     def __str__(self):
         return self.user.username
-class PharmacyManager(BaseUserManager):
- 
-    def create_Pharmacy(self, first_name, last_name, email, designation, address, password=None):
-        if email is None:
-            raise TypeError('Users must have an email address.')
-        pharmacy = PharmacyProfile(first_name=first_name, last_name=last_name, 
-                            email=self.normalize_email(email),
-                            designation=designation, address=address)
-        pharmacy.set_password(password)
-        pharmacy.save()
-        return pharmacy
-
-class PharmacyProfile(models.Model):
-    id=models.AutoField(primary_key=True, default=None)
-    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True,related_name="pharmacyprofile")
-    address = models.CharField(max_length=255)
-    website = models.CharField(max_length=255,null=True)
-    contact_number = models.CharField(max_length=255,null=True)
-    rating = models.IntegerField(null=True)
-    service_provided = models.CharField(max_length=255,null=True)
-    time_operation=models.DateTimeField(auto_now=True)
-    debut=models.DateTimeField(auto_now=True)
-    deliver_information = models.CharField(max_length=255, null=True)
-    license_number = models.CharField(max_length=255,null=True)
-    license_number_document = models.FileField(null=True)
-    health_safety_code = models.CharField(max_length=255,null=True)
-    health_safety_code_doc = models.FileField(max_length=255,null=True)
-    about = models.TextField(max_length=150,null=True)
-    photos = models.ImageField(upload_to='pharmacy',null=True)
-    patners = models.CharField(max_length=255, null=True)
-    coments = models.CharField(max_length=255, null=True)
-    objects=PharmacyManager()
-   
 
 
-    def __str__(self):
-        return self.user.username
+
 
     
 class PharmacyPhotos(models.Model):
@@ -155,6 +162,7 @@ class PharmacyPhotos(models.Model):
 
 class Product(models.Model):
     currently_logged_in_pharmacy_id=models.AutoField(primary_key=True)
+    added_to_branch=models.ForeignKey(PharmacyBranch,on_delete=models.DO_NOTHING)
     profile_image = models.ImageField()
     name=models.CharField(max_length=255)
     code = models.CharField(max_length=255)

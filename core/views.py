@@ -497,48 +497,69 @@ class PharmacyPhotosViewSet(viewsets.ViewSet):
 
         return Response(dict_response)
 
-class PharmacyBranchViewSet(viewsets.ViewSet):
-    permission_classes = [AllowAny,]
 
-    def list(self,request):
-        pharmacybranch=PharmacyBranch.objects.all()
-        serializer=PharmacyBranchSerializer(pharmacybranch,many=True,context={"request":request})
-        response_dict={"error":False,"message":"All Pharmacy Branch List Data","data":serializer.data}
-        return Response(response_dict)
 
-    def post(self,request):
-        try:
-            serializer= PharmacySerializer(data=request.data,context={"request":request})
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            dict_response={"error":False,"message":"Pharmacy Branch Data Save Successfully"}
-        except:
-            dict_response={"error":True,"message":"Error During Saving Pharmacy Branch Data"}
-        return Response(dict_response)
+# class PharmacyBranchViewSet(viewsets.ModelViewSet):
+#     permission_classes = [AllowAny,]
+#     serializer_class = PharmacyBranchSerializer
+#     queryset = PharmacyBranch.objects.all()
+#     def get(self, format=None):
+
+#         seller = PharmacyProfile.objects.all()
+#         serializer = UserSerializer(seller, many=True)
+#         return Response(serializer.data)
+
+#     def post(self, request):
+#         serializer = PharmacyBranchSerializer(data=request.data)
+#         if serializer.is_valid(raise_exception=ValueError):
+#             serializer.create(validated_data=request.data)
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.error_messages,
+#                         status=status.HTTP_400_BAD_REQUEST)
+
+
+# class PharmacyBranchViewSet(viewsets.ViewSet):
+#     permission_classes = [AllowAny,]
+
+#     def list(self,request):
+#         pharmacybranch=PharmacyBranch.objects.all()
+#         serializer=PharmacyBranchSerializer(pharmacybranch,many=True,context={"request":request})
+#         response_dict={"error":False,"message":"All Pharmacy Branch List Data","data":serializer.data}
+#         return Response(response_dict)
+
+#     def post(self,request):
+#         try:
+#             serializer= PharmacyBranchSerializer(data=request.data,context={"request":request})
+#             serializer.is_valid(raise_exception=True)
+#             serializer.save()
+#             dict_response={"error":False,"message":"Pharmacy Branch Data Save Successfully"}
+#         except:
+#             dict_response={"error":True,"message":"Error During Saving Pharmacy Branch Data"}
+#         return Response(dict_response)
     
-    def retrieve(self, request, pk=None):
-        queryset = PharmacyBranch.objects.all()
-        pharmacybranch = get_object_or_404(queryset, pk=pk)
-        serializer = PharmacyBranchSerializer(pharmacybranch, context={"request": request})
+#     def retrieve(self, request, pk=None):
+#         queryset = PharmacyBranch.objects.all()
+#         pharmacybranch = get_object_or_404(queryset, pk=pk)
+#         serializer = PharmacyBranchSerializer(pharmacybranch, context={"request": request})
 
-        serializer_data = serializer.data
-        # Accessing All the Medicine Details of Current Medicine ID ..... 
-        #pass
+#         serializer_data = serializer.data
+#         # Accessing All the Medicine Details of Current Medicine ID ..... 
+#         #pass
 
-        return Response({"error": False, "message": "Single Pharmacy Data Fetch", "data": serializer_data})
+#         return Response({"error": False, "message": "Single Pharmacy Data Fetch", "data": serializer_data})
 
-    def update(self,request,pk=None):
-        try:
-            queryset=PharmacyBranch.objects.all()
-            pharmacybranch=get_object_or_404(queryset,pk=pk)
-            serializer=PharmacyBranchSerializer(pharmacy,data=request.data,context={"request":request})
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            dict_response={"error":False,"message":"Successfully Updated Pharmacy Branch Data"}
-        except:
-            dict_response={"error":True,"message":"Error During Updating Pharmacy Branch Data"}
+#     def update(self,request,pk=None):
+#         try:
+#             queryset=PharmacyBranch.objects.all()
+#             pharmacybranch=get_object_or_404(queryset,pk=pk)
+#             serializer=PharmacyBranchSerializer(pharmacy,data=request.data,context={"request":request})
+#             serializer.is_valid(raise_exception=True)
+#             serializer.save()
+#             dict_response={"error":False,"message":"Successfully Updated Pharmacy Branch Data"}
+#         except:
+#             dict_response={"error":True,"message":"Error During Updating Pharmacy Branch Data"}
 
-        return Response(dict_response)
+#         return Response(dict_response)
 
 class ProductViewSet(viewsets.ViewSet):
     permission_classes = [AllowAny,]
@@ -1073,3 +1094,48 @@ class NotificationPharmacistViewSet(viewsets.ViewSet):
             dict_response={"error":True,"message":"Error During Updating NotificationPharmacist Data"}
 
         return Response(dict_response)
+
+
+#New Viewsets
+
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework import status
+
+from .serializers import *
+from . import views
+
+@api_view(['GET', 'POST'])
+def PharmacyBranch_list(request):
+    if request.method == 'GET':
+        data = PharmacyBranch.objects.all()
+
+        serializer = PharmacyBranchSerializer(data, context={'request': request}, many=True)
+
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = PharmacyBranchSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_201_CREATED)
+            
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['PUT', 'DELETE'])
+def PharmacyBranch_detail(request, pk):
+    try:
+        student = PharmacyBranch.objects.get(pk=pk)
+    except Student.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'PUT':
+        serializer = PharmacyBranchSerializer(student, data=request.data,context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        student.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

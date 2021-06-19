@@ -294,7 +294,7 @@ class PharmacyPhotosSerializer(serializers.ModelSerializer):
 class PharmacyBranchSerializer(serializers.ModelSerializer):
     class Meta:
         model=PharmacyBranch
-        fields="__all__"
+        fields=("address","description")
 
 
 class ProductSerliazer(serializers.ModelSerializer):
