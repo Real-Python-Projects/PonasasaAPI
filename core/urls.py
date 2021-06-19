@@ -48,6 +48,8 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('docs/', schema_view),
     path('mpesa/', include(mpesa_urls)),
+   
+   path('api/v1/', include('core.djoser')),
 ]
 
 
